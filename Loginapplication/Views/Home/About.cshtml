@@ -1,0 +1,30 @@
+﻿
+
+
+@if (Session["EmpName"] != null)
+{
+
+    ViewBag.Title = "About";
+
+    <br />
+    <h1>Welcome @Session["EmpName"]</h1>
+
+    <br />
+
+    @*<form name="frmabut" id="frmabut" method="post">
+            @Html.ValidationSummary()
+            <br />
+            <input type="text" name="txtName" id="txtName" class="form-control" value="@Request["txtName"]" />
+            @Html.ValidationMessage("txtName")
+            <br />
+            <input type="text" name="txtLast" id="txtLast" class="form-control" value="@Request["txtLast"]" />
+            @Html.ValidationMessage("txtLast")
+            <br />
+            <input type="submit" name="btnsubmit" id="btnsubmit" value="Submit" class="btn btn-block btn-sm btn-default" />
+
+            <br />
+
+        </form>*@
+
+    <p>Use this area to provide additional information.</p>
+}

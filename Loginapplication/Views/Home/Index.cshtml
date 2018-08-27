@@ -1,0 +1,76 @@
+﻿@model Loginapplication.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script type="text/javascript">
+                //function submit() {
+                //    var data = {
+
+                //        UName: $('#inputEmail').val(),
+                //        Password: $('#inputPassword').val()
+                //    };
+
+                    //$.post("/Home/Form4", { sm: data }, function () { alert('Successfully Saved') });
+               // }
+
+        function RegistrationRedirect() {
+            location.href = '@Url.Content("~/Home/Register/")';
+        }
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="toanimate">
+                    <div class="card card-signin my-5">
+
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Log In</h5>
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="form-label-group">
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
+                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+
+                                </div>
+
+                                <div class="form-label-group">
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                                </div>
+
+                                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                                <input id="btnSignup" name="btnSignup" class="btn btn-lg btn-danger btn-block" type="button" value="Sign up" onclick="RegistrationRedirect();" />
+                                <br />
+                                <label class="text-center text-danger">@ViewBag.Message</label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

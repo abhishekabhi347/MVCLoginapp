@@ -1,0 +1,67 @@
+﻿
+
+@{
+    ViewBag.Title = "Contacts";
+}
+<br />
+<h2 class="text-center">@ViewBag.Title</h2>
+<br />
+
+<br />
+
+<div class="container">
+    <table class="table table-responsive table-striped table-hover table-md">
+        <thead>
+            <tr>
+                <td>Action</td>
+                <td>Employee Name</td>
+                <td>Job</td>
+                <td>Country</td>
+                <td>Retired</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+               
+
+                    @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
+
+                    @Html.ActionLink("Details", "Details", new { id=item.EmployeeId })
+
+               
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.Country
+                </td>
+                <td>
+                    @item.IsEmployeeRetired
+                </td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+<br /><br />
+
+@*<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>*@
+
+@*<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>*@
