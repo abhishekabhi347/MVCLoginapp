@@ -185,8 +185,6 @@ namespace Loginapplication.Controllers
                         return View();
                     }
                 }
-                
-
                     
             }
             else
@@ -195,10 +193,63 @@ namespace Loginapplication.Controllers
             }
 
         }
+
         [HttpPost]
-        public ActionResult EditEmp()
+        public ActionResult EditEmp(Employee employee)
         {
-            return View();
+            try
+            {
+                using (EmpDbContext empDb = new EmpDbContext())
+                {
+                    var data = (from a in empDb.Employees
+                                where a.EmployeeId == employee.EmployeeId
+                                select a).FirstOrDefault();
+
+                    data.Company = employee.Company;
+                    data.Country = employee.Country;
+                    data.Description = employee.Description;
+                    data.IsEmployeeRetired = employee.IsEmployeeRetired;
+                    data.Name = employee.Name;
+
+                    empDb.Entry(data).State = EntityState.Modified;
+
+                    empDb.SaveChanges();
+                }
+
+                return RedirectToAction("Contact");
+            }
+            catch
+            {
+                return RedirectToAction("EditEmp");
+            }
+        }
+
+        public ActionResult EmpDetails(int id)
+        {
+
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext empDb = new EmpDbContext())
+                {
+                    var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
+
+                    if (result != null)
+                    {
+                        return View(result);
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+
+
+
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
 
