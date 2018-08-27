@@ -3,6 +3,9 @@
 @{
     ViewBag.Title = "Contacts";
 }
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
 <br />
 <h2 class="text-center">@ViewBag.Title</h2>
 <br />
@@ -23,29 +26,29 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-               
+                <tr>
+                    <td>
 
-                    @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
 
-                    @Html.ActionLink("Details", "Details", new { id=item.EmployeeId })
+                        @Html.ActionLink("Edit", "EditEmp", new { id = item.EmployeeId }) |
 
-               
-                </td>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Description
-                </td>
-                <td>
-                    @item.Country
-                </td>
-                <td>
-                    @item.IsEmployeeRetired
-                </td>
-            </tr>
+                        @Html.ActionLink("Details", "Details", new { id = item.EmployeeId })
+
+
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Description
+                    </td>
+                    <td>
+                        @item.Country
+                    </td>
+                    <td>
+                        @item.IsEmployeeRetired
+                    </td>
+                </tr>
             }
         </tbody>
 
@@ -55,13 +58,13 @@
 <br /><br />
 
 @*<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>*@
+        One Microsoft Way<br />
+        Redmond, WA 98052-6399<br />
+        <abbr title="Phone">P:</abbr>
+        425.555.0100
+    </address>*@
 
 @*<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>*@
+        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    </address>*@

@@ -20,6 +20,8 @@ namespace Loginapplication.Models
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
+            
+
         }
     }
 

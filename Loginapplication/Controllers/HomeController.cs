@@ -18,7 +18,6 @@ namespace Loginapplication.Controllers
         public ActionResult Index()
         {
 
-
             using (EmpDbContext dba = new EmpDbContext())
             {
                 var ado = dba.Employees.ToList();
@@ -29,14 +28,12 @@ namespace Loginapplication.Controllers
         [HttpPost]
         public ActionResult Index(string UserName,string Password)
         {
-
             if (ModelState.IsValid)
             {
                 try
                 {
                     using (LoginDbContext db = new LoginDbContext())
                     {
-
                         // var result = db.Users.FirstOrDefault(u => u.UserName == UserName && u.Password == Password);
 
                         var result = (from s in db.Users where s.UserName == UserName || s.Email == UserName select s).FirstOrDefault();
@@ -168,6 +165,59 @@ namespace Loginapplication.Controllers
                 return RedirectToAction("Register");
             }
         }
+
+
+        [HttpGet]
+        public ActionResult EditEmp(int id)
+        {
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext empDb = new EmpDbContext())
+                {
+                    var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
+
+                    if(result != null)
+                    {
+                        return View(result);
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+                
+
+                    
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+        [HttpPost]
+        public ActionResult EditEmp()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //protected override void Dispose(bool disposing)
         //{
