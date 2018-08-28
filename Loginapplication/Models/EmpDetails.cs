@@ -32,6 +32,7 @@ namespace Loginapplication.Models
         public string Name { get; set; }
 
         [StringLength(100, ErrorMessage = "Description can contain only 100 characters")]
+        [Required(ErrorMessage = "Please Enter Description")]
         public string Description { get; set; }
 
         public bool IsEmployeeRetired { get; set; }
@@ -41,5 +42,8 @@ namespace Loginapplication.Models
 
         [StringLength(50)]
         public string Company { get; set; }
+
+
+        public bool IsActive { get; set; } = true;
     }
 }

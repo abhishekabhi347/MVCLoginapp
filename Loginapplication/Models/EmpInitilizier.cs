@@ -12,13 +12,15 @@ namespace Loginapplication.Models
         {
             var Emp = new List<Employee>()
             {
-                new Employee { Name="Abhishek", Company="ISSI", Description="Dev", Country="India",IsEmployeeRetired=false },
-                new Employee { Name="Raju", Company="Google", Description="UI", Country="India",IsEmployeeRetired=false },
-                new Employee { Name="Gautham", Company="TCS", Description="Support", Country="US",IsEmployeeRetired=true }
+                new Employee { Name="Abhishek", Company="ISSI", Description="Dev", Country="India",IsEmployeeRetired=false, IsActive =true },
+                new Employee { Name="Raju", Company="Google", Description="UI", Country="India",IsEmployeeRetired=false, IsActive =true },
+                new Employee { Name="Gautham", Company="TCS", Description="Support", Country="US",IsEmployeeRetired=true, IsActive =true }
             };
+
             Emp.ForEach(x => context.Employees.Add(x));
             context.SaveChanges();
 
+            base.Seed(context);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.SessionState;
 using Loginapplication.Models;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace Loginapplication.Controllers
 {
@@ -14,7 +15,7 @@ namespace Loginapplication.Controllers
 
     public class HomeController : Controller
     {
-
+        [HttpGet]
         public ActionResult Index()
         {
 
@@ -168,6 +169,49 @@ namespace Loginapplication.Controllers
 
 
         [HttpGet]
+        public ActionResult AddEmp()
+        {
+            if (Session["EmpName"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddEmp(Employee employee)
+        {
+            if (Session["EmpName"] != null)
+            {
+                try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (EmpDbContext empDb = new EmpDbContext())
+                    {
+                        empDb.Employees.Add(employee);
+                        empDb.SaveChanges();
+                    }
+                    ModelState.Clear();
+                    return RedirectToAction("Contact");
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
+            }
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
         public ActionResult EditEmp(int id)
         {
             if (Session["EmpName"] != null)
@@ -193,34 +237,47 @@ namespace Loginapplication.Controllers
 
         }
 
+        
+
+
         [HttpPost]
         public ActionResult EditEmp(Employee employee)
         {
-            try
+            if (Session["EmpName"] != null)
             {
-                using (EmpDbContext empDb = new EmpDbContext())
+                try
                 {
-                    var data = (from a in empDb.Employees
-                                where a.EmployeeId == employee.EmployeeId
-                                select a).FirstOrDefault();
+                    using (EmpDbContext empDb = new EmpDbContext())
+                    {
+                        var data = (from a in empDb.Employees
+                                    where a.EmployeeId == employee.EmployeeId
+                                    select a).FirstOrDefault();
 
-                    data.Company = employee.Company;
-                    data.Country = employee.Country;
-                    data.Description = employee.Description;
-                    data.IsEmployeeRetired = employee.IsEmployeeRetired;
-                    data.Name = employee.Name;
+                        data.Company = employee.Company;
+                        data.Country = employee.Country;
+                        data.Description = employee.Description;
+                        data.IsEmployeeRetired = employee.IsEmployeeRetired;
+                        data.Name = employee.Name;
+                        data.IsActive = employee.IsActive;
 
-                    empDb.Entry(data).State = EntityState.Modified;
+                        empDb.Entry(data).State = EntityState.Modified;
 
-                    empDb.SaveChanges();
+                        empDb.SaveChanges();
+
+                    }
+                    return RedirectToAction("Contact");
                 }
-
-                return RedirectToAction("Contact");
-            }
-            catch
+                catch (Exception ex)
             {
-                return RedirectToAction("EditEmp");
+                return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
             }
+                // return RedirectToAction("EditEmp");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
         }
 
         public ActionResult EmpDetails(int id)
@@ -251,23 +308,24 @@ namespace Loginapplication.Controllers
             }
         }
 
+        public ActionResult EmpDelete(int id)
+        {
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext empDb = new EmpDbContext())
+                {
+                    var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
+                    empDb.Employees.Remove(result);
+                    empDb.SaveChanges();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                }
+                    return RedirectToAction("Contact");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
         //protected override void Dispose(bool disposing)
         //{

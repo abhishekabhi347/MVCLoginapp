@@ -16,11 +16,16 @@ namespace Loginapplication.Models
 
         public DbSet<Employee> Employees { get; set; }
 
+        public DbSet<Technologies> Technologies { get; set; }
+
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            
+            modelBuilder.Types().Configure(t => t.MapToStoredProcedures());
+
 
         }
     }
