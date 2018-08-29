@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Loginapplication.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,16 +12,59 @@ namespace Loginapplication.Controllers
         // GET: Technology
         public ActionResult Index()
         {
-            //if (Session["EmpName"] != null)
-            //{
+            if (Session["EmpName"] != null)
+            {
 
+                var tech = new EmpDbContext();
+                ViewBag.tech = tech.Technologies.ToList();
                 return View();
-            //}
-            //else
-            //{
-            //    return RedirectToAction("Home/Index");
-            //}
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
+
+        
+
+
+        [HttpPost]
+        public ActionResult Index(Technologies technologies)
+        {
+            if (Session["EmpName"] != null)
+            {
+                
+                try
+                {
+                    if (ModelState.IsValid)
+                    {
+                        using (EmpDbContext Techdb = new EmpDbContext())
+                        {
+                            Techdb.Technologies.Add(technologies);
+                            Techdb.SaveChanges();
+                            ViewBag.Tech = Techdb.Technologies.ToList();
+                        }
+                        ModelState.Clear();
+                        //var tech = new EmpDbContext();
+                        //ViewBag.Tech = tech.Technologies.ToList();
+                        //return RedirectToAction("Index","Technology");
+                        return PartialView("_StudentData");
+                    }
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new HandleErrorInfo(ex, "Technology", "Index"));
+                }
+               
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
 
         // GET: Technology/Details/5
         public ActionResult Details(int id)
@@ -34,11 +78,11 @@ namespace Loginapplication.Controllers
             if (Session["EmpName"] != null)
             {
 
-                return View();
+                return PartialView("_Create");
             }
             else
             {
-                return RedirectToAction("Home/Index");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -68,7 +112,7 @@ namespace Loginapplication.Controllers
             }
             else
             {
-                return RedirectToAction("Home/Index");
+                return RedirectToAction("Index", "Home");
             }
         }
 
