@@ -24,7 +24,7 @@ namespace Loginapplication.Models
         [Required(ErrorMessage = "Please Enter Description")]
         public string Description { get; set; }
 
-        [NotMapped]
+        [ScaffoldColumn(false)]
         public string Checkstatus { get; set; } = "Y";
     }
 }

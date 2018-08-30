@@ -9,31 +9,48 @@ namespace Loginapplication.Models
     public partial class User
     {
 
-        [Key]
+        [Key,Column(Order =0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]       
         public int Empid { get; set; }
 
         [Display(Name = "Employee Name")]
         [StringLength(200)]
+        [DataType(DataType.Text)]
         //[Required(ErrorMessage = "Employee Name Is Mandatory")]
         public string EmpName { get; set; }
 
         [Required(ErrorMessage ="Password Is Mandatory")]
+        [DataType(DataType.Password)]
         [StringLength(500)]
         public string Password { get; set; }
 
         [StringLength(200)]
+        [DataType(DataType.EmailAddress)]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Please Provide Valid Email")]
-        public string Email { get; set; }
-
-        [StringLength(2)]
-       // [Required(ErrorMessage = "Checkstatus Is Mandatory")]
-        public string Checkstatus { get; set; }
+        public string Email { get; set; }    
 
         [Display(Name = "User Name")]
         [StringLength(100)]
         [Required(ErrorMessage ="User Name is Mandatory")]
         public string UserName { get; set; }
 
+        
+        [Display(Name ="Choose Role")]
+        public int? Roleid { get; set; }
+
         public string Vcode { get; set; }
+
+        [ScaffoldColumn(false)]
+        public List<Role> RoleList { get; set; }
+
+        [ScaffoldColumn(false)]
+        public Role Roledetails { get; set; }
+
+
+        [StringLength(2)]
+        [ScaffoldColumn(false)]
+        // [Required(ErrorMessage = "Checkstatus Is Mandatory")]
+        public string Checkstatus { get; set; } = "Y";
+
     }
 }

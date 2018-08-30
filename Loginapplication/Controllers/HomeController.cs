@@ -21,7 +21,7 @@ namespace Loginapplication.Controllers
 
             using (EmpDbContext dba = new EmpDbContext())
             {
-                var ado = dba.Employees.ToList();
+                var ado = dba.Employees.ToList();              
                 return View();
             }
         }
@@ -45,12 +45,16 @@ namespace Loginapplication.Controllers
                             var encodingPasswordString = Helper.EncodePassword(Password, hashCode);
                             //Check Login Detail User Name Or Password    
                             var query = (from s in db.Users where (s.UserName == UserName || s.Email == UserName) && s.Password.Equals(encodingPasswordString) select s).FirstOrDefault();
+                            var empdb = new EmpDbContext();
+                            var getrole = (from s in empdb.Roles where (s.Roleid == query.Roleid) select s).FirstOrDefault();
                             if (query != null)
                             {
                                 //RedirectToAction("Details/" + id.ToString(), "FullTimeEmployees");    
                                 //return View("../Admin/Registration"); url not change in browser  
                                 Session["EmpName"] = Convert.ToString(result.UserName);
                                 Session["EmpID"] = Convert.ToInt32(result.Empid);
+                                Session["RoleID"] = Convert.ToInt32(result.Roleid);
+                                Session["Role"] = Convert.ToString(getrole.RoleName);
                                 return RedirectToAction("About");
                             }
                             ViewBag.Message = "Invalid User Name or Password";
@@ -117,7 +121,14 @@ namespace Loginapplication.Controllers
 
         public ActionResult Register()
         {
-            return View();
+            var p = new User();
+            using (EmpDbContext db = new EmpDbContext())
+            {
+               
+                p.RoleList = db.Roles.ToList();                
+            }
+            return View(p);
+            //return View();
         }
 
         [HttpPost]
@@ -140,7 +151,7 @@ namespace Loginapplication.Controllers
                             var keyNew = Helper.GeneratePassword(10);
                             var password = Helper.EncodePassword(user.Password, keyNew);
                             user.Password = password;
-                            user.Checkstatus = "Y";
+                            //user.Checkstatus = "Y";
                             user.Vcode = keyNew;
                             db.Users.Add(user);
                             db.SaveChanges();

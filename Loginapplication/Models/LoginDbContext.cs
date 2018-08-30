@@ -10,7 +10,7 @@ namespace Loginapplication.Models
     public  class LoginDbContext : DbContext
     {
         public LoginDbContext()
-            : base("name=Login")
+            : base("name=LoginDbCS")
         {
 
         }

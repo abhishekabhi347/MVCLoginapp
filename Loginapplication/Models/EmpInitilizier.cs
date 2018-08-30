@@ -17,6 +17,16 @@ namespace Loginapplication.Models
                 new Employee { Name="Gautham", Company="TCS", Description="Support", Country="US",IsEmployeeRetired=true, IsActive =true }
             };
 
+            var roles = new List<Role>()
+            {
+                new Role { RoleName="Admin" },
+                new Role { RoleName="Employee" },
+                new Role { RoleName="User" }
+
+            };
+
+            roles.ForEach(x => context.Roles.Add(x));
+
             Emp.ForEach(x => context.Employees.Add(x));
             context.SaveChanges();
 

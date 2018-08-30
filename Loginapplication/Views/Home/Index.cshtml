@@ -17,25 +17,16 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script type="text/javascript">
-                //function submit() {
-                //    var data = {
-
-                //        UName: $('#inputEmail').val(),
-                //        Password: $('#inputPassword').val()
-                //    };
-
-                    //$.post("/Home/Form4", { sm: data }, function () { alert('Successfully Saved') });
-               // }
-
+            
         function RegistrationRedirect() {
             location.href = '@Url.Content("~/Home/Register/")';
         }
     </script>
     <style>
         body {
-            background: #FDC830; /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #F37335, #FDC830); /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #F37335, #FDC830); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: #da4453; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #da4453, #89216b); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #da4453, #89216b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
     </style>
 </head>
@@ -47,7 +38,7 @@
                     <div class="card card-signin my-5">
 
                         <div class="card-body">
-                            <h5 class="card-title text-center">Log In</h5>
+                            <h4 class="card-title text-center font-weight-bold" style="font-family:'Franklin Gothic';">Log In</h4>
                             @using (Html.BeginForm())
                             {
                                 @Html.AntiForgeryToken()

@@ -18,6 +18,8 @@ namespace Loginapplication.Models
 
         public DbSet<Technologies> Technologies { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -8,7 +8,10 @@ namespace Loginapplication.Models
 {
     public class UsersInitilizer : DropCreateDatabaseIfModelChanges<LoginDbContext>
     {
-        
+        protected override void Seed(LoginDbContext context)
+        {
+           
+        }
 
     }
 }

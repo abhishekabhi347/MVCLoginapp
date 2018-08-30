@@ -4,51 +4,14 @@
         ViewBag.Title = "Index";
     }*@
 
-@section Scripts {
-    <script type="text/javascript">
 
-        $('#AddEditFunctionalArea').click(function (e) {
-            $.post('_Create', { id: $(this).attr('data-id') }, function (xx) {
-                $('#modalContainer').html(xx);
-                $('#idAddEditFunctionalAreaModal').modal('show');
-            });
-        });
-
-            //$(document).ready(function () {
-            //    $('#demoGrid').dataTable({
-
-            //    });
-            //    alert('hi');
-            //    $.ajax({
-            //        type: "GET",
-            //        url: "/Technology/Index",
-            //        contentType: "application/json; charset=utf-8",
-            //        dataType: "json",
-            //        success: function (response) { alert(response.responseText) },
-            //        failure: function (response) {
-            //            alert(response.responseText);
-            //        },
-            //        error: function (response) {
-            //            alert(response.responseText);
-            //        }
-            //    });
-            //});
-
-
-    </script>
-}
 <h2 class="text-center">Technologies</h2>
 <br />
 <div class="container">
 
-    <div class="row">
-        <div class="col-md-4">
-            @Html.ActionLink("Add New Technology", "Create" )
-            <a href="#" id="addnewtech" data-toggle="modal" data-target="#myModal" data-id="0">Add New Technology</a>
-        </div>
-    </div>
+    <a href="#" class="btn btn-primary" onclick="AddEditTechnology(0)">Add New Technology</a>
     <br />
-
+    <br />
 
     <table class="table table-striped table-bordered table-md" id="TechTable">
         <thead class="bg-info text-white font-weight-bold text-center">
@@ -58,74 +21,96 @@
                 <td>Description</td>
             </tr>
         </thead>
-        @*<tbody>
-                @foreach (var item in Model)
+        <tbody>
+            @if (ViewBag.Tech != null)
+            {
+
+                foreach (var item in ViewBag.Tech)
                 {
                     <tr>
-                        <td>
-                            <a href="#" id="addnewtech" data-toggle="modal" data-target="#myModal" >Edit</a>
+                        <td class="text-center">
+                            <a href="#" onclick="AddEditTechnology(@item.TechId)" title="Edit"><i class="fa fa-pencil"></i></a> &nbsp;&nbsp;
+                            <a href="#" onclick="DelTechnology(@item.TechId)" title="Delete"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>
-                         @Html.DisplayFor(m => m.Technology)
+                            @item.Technology
 
                         </td>
                         <td>
-                            @Html.DisplayFor(m => m.Description)
+                            @item.Description
 
                         </td>
                     </tr>
                 }
-            </tbody>*@
+            }
+        </tbody>
     </table>
 
+    @*</div>*@
+
+
+
+
+
+
+    <div class="modal fade" id="myModal1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add/Edit Technology</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" id="myModalBodyDiv1">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hiddenTechId" />
 </div>
 
-<div id="modalContainer" class="clsDivModalContainer"></div>
+<script>
+
+    var AddEditTechnology = function (techid) {
+
+        var url = "/Technology/AddEditTechnology?TechID=" + techid;
+
+        $("#myModalBodyDiv1").load(url, function () {
+            $("#myModal1").modal("show");
+
+        });
+
+    };
+
+
+    var DelTechnology = function (delid) {
+        var conf = confirm("Do you want to Delete this record");
+        if (conf) {
+            $.ajax({
+
+                type: "POST",
+                url: "/Technology/DeleteTech?TechId=" + delid,
+                //data: myformdata,
+                success: function () {
+                    alert('del');
+
+                },
+                error: function () {
+                    //$("#loaderDiv").hide();
+                    alert('error');
+                }
+
+            });
+            //var url = "/Technology/DeleteTech?TechId=" + delid;
+
+        }
+      
+    };
+</script>
 
 
 
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            @using (Html.BeginForm("Index", "Technology", FormMethod.Post))
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.TechId)
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add/Edit Technologies</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
 
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Technology, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-5">
-                            @Html.TextBoxFor(model => model.Technology, htmlAttributes: new { @class = "form-control", @placeholder = "Please Enter Technology" })
-                            @Html.ValidationMessageFor(model => model.Technology, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-5">
-                            @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", @placeholder = "Please Enter Description" })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">Submit</button>
-                </div>
-            }
-
-        </div>
-    </div>
-</div>
 
 <br />

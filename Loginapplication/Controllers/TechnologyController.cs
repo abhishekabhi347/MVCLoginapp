@@ -16,7 +16,7 @@ namespace Loginapplication.Controllers
             {
 
                 var tech = new EmpDbContext();
-                ViewBag.tech = tech.Technologies.ToList();
+                ViewBag.tech = tech.Technologies.Where(x => x.Checkstatus == "Y").ToList();
                 return View();
             }
             else
@@ -33,125 +33,86 @@ namespace Loginapplication.Controllers
         {
             if (Session["EmpName"] != null)
             {
-                
-                try
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+
+                    try
                     {
+
                         using (EmpDbContext Techdb = new EmpDbContext())
                         {
-                            Techdb.Technologies.Add(technologies);
-                            Techdb.SaveChanges();
-                            ViewBag.Tech = Techdb.Technologies.ToList();
+                            if (technologies.TechId > 0)
+                            {
+                                //update
+                                Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == technologies.TechId);
+                                techlist.Technology = technologies.Technology;
+                                techlist.Description = technologies.Description;
+                                Techdb.SaveChanges();
+                            }
+                            else
+                            {
+                                //Insert
+                                Technologies techins = new Technologies();
+                                techins.Technology = technologies.Technology;
+                                techins.Description = technologies.Description;
+                                Techdb.Technologies.Add(techins);
+                                Techdb.SaveChanges();
+                            }
+
                         }
-                        ModelState.Clear();
-                        //var tech = new EmpDbContext();
-                        //ViewBag.Tech = tech.Technologies.ToList();
-                        //return RedirectToAction("Index","Technology");
-                        return PartialView("_StudentData");
+
+                        return View(technologies);
+
                     }
-                    return View();
+
+
+
+                    catch (Exception ex)
+                    {
+                        return View("Error", new HandleErrorInfo(ex, "Technology", "Index"));
+                    }
                 }
-                catch (Exception ex)
+                return RedirectToAction("AddEditTechnology",technologies.TechId);
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
+
+
+        public ActionResult AddEditTechnology(int TechID)
+        {
+            Technologies model = new Technologies();
+            using (EmpDbContext Techdb = new EmpDbContext())
+            {
+                if (TechID > 0)
                 {
-                    return View("Error", new HandleErrorInfo(ex, "Technology", "Index"));
+                    Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == TechID);
+                    model.TechId = techlist.TechId;
+                    model.Technology = techlist.Technology;
+                    model.Description = techlist.Description;
                 }
-               
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return PartialView("_Create", model);
         }
 
-
-
-        // GET: Technology/Details/5
-        public ActionResult Details(int id)
+        public ActionResult DeleteTech(int TechId)
         {
-            return View();
+            Technologies model = new Technologies();
+            using (EmpDbContext Techdb = new EmpDbContext())
+            {
+                Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == TechId);
+                model.Checkstatus = "N";
+
+            }
+                return RedirectToAction("Index", "Technology");
         }
 
-        // GET: Technology/Create
-        public ActionResult Create()
-        {
-            if (Session["EmpName"] != null)
-            {
 
-                return PartialView("_Create");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        // POST: Technology/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Technology/Edit/5
-        public ActionResult Edit(int id)
-        {
-            if (Session["EmpName"] != null)
-            {
-
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-        // POST: Technology/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Technology/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Technology/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
