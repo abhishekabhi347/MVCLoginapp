@@ -31,6 +31,32 @@ namespace Loginapplication.Controllers
         [HttpPost]
         public ActionResult Index(Technologies technologies)
         {
+            return View();
+        }
+
+
+
+
+        [HttpGet]
+        public ActionResult AddEditTechnology(int TechID)
+        {
+            Technologies model = new Technologies();
+            using (EmpDbContext Techdb = new EmpDbContext())
+            {
+                if (TechID > 0)
+                {
+                    Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == TechID);
+                    model.TechId = techlist.TechId;
+                    model.Technology = techlist.Technology;
+                    model.Description = techlist.Description;
+                }
+            }
+            return PartialView("_Create", model);
+        }
+
+        [HttpPost]
+        public ActionResult AddEditTechnology(Technologies technologies)
+        {
             if (Session["EmpName"] != null)
             {
                 if (ModelState.IsValid)
@@ -52,16 +78,17 @@ namespace Loginapplication.Controllers
                             else
                             {
                                 //Insert
-                                Technologies techins = new Technologies();
-                                techins.Technology = technologies.Technology;
-                                techins.Description = technologies.Description;
-                                Techdb.Technologies.Add(techins);
+                                //Technologies techins = new Technologies();
+                                //techins.Technology = technologies.Technology;
+                                //techins.Description = technologies.Description;
+                                technologies.Checkstatus = "Y";
+                                Techdb.Technologies.Add(technologies);
                                 Techdb.SaveChanges();
                             }
 
                         }
-
-                        return View(technologies);
+                        ModelState.Clear();
+                        return RedirectToAction("Index",technologies);
 
                     }
 
@@ -71,8 +98,10 @@ namespace Loginapplication.Controllers
                     {
                         return View("Error", new HandleErrorInfo(ex, "Technology", "Index"));
                     }
+
                 }
-                return RedirectToAction("AddEditTechnology",technologies.TechId);
+
+                return RedirectToAction("AddEditTechnology", technologies.TechId);
 
             }
             else
@@ -81,34 +110,14 @@ namespace Loginapplication.Controllers
             }
         }
 
-
-
-
-
-        public ActionResult AddEditTechnology(int TechID)
-        {
-            Technologies model = new Technologies();
-            using (EmpDbContext Techdb = new EmpDbContext())
-            {
-                if (TechID > 0)
-                {
-                    Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == TechID);
-                    model.TechId = techlist.TechId;
-                    model.Technology = techlist.Technology;
-                    model.Description = techlist.Description;
-                }
-            }
-            return PartialView("_Create", model);
-        }
-
         public ActionResult DeleteTech(int TechId)
         {
             Technologies model = new Technologies();
             using (EmpDbContext Techdb = new EmpDbContext())
             {
                 Technologies techlist = Techdb.Technologies.SingleOrDefault(x => x.TechId == TechId);
-                model.Checkstatus = "N";
-
+                techlist.Checkstatus = "N";
+                Techdb.SaveChanges();
             }
                 return RedirectToAction("Index", "Technology");
         }

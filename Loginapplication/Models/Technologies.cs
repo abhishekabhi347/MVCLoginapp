@@ -25,6 +25,6 @@ namespace Loginapplication.Models
         public string Description { get; set; }
 
         [ScaffoldColumn(false)]
-        public string Checkstatus { get; set; } = "Y";
+        public string Checkstatus { get; set; }
     }
 }
