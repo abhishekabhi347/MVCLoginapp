@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+
+    
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -17,9 +19,28 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
+/*input,
+select,*/
 textarea {
     max-width: 280px;
     resize:none;
 }
+
+
+
+.hm-gradient {
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+
+.darken-grey-text {
+    color: #2E2E2E;
+}
+
+.navbar .dropdown-menu a:hover {
+    color: #616161 !important;
+}
+
+.darken-grey-text {
+    color: #2E2E2E;
+}
+
