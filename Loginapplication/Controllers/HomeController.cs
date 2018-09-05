@@ -9,6 +9,10 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Runtime.Remoting.Contexts;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Loginapplication.Controllers
 {
@@ -20,6 +24,7 @@ namespace Loginapplication.Controllers
         public ActionResult Index()
         {
             //Session.Abandon();
+           
 
             using (EmpDbContext dba = new EmpDbContext())
             {
@@ -150,8 +155,6 @@ namespace Loginapplication.Controllers
                     using (LoginDbContext db = new LoginDbContext())
                     {
 
-
-
                         var chkUser = (from s in db.Users where s.UserName == user.UserName || s.Email == user.Email select s).FirstOrDefault();
                         if (chkUser == null)
                         {
@@ -164,8 +167,17 @@ namespace Loginapplication.Controllers
                             db.SaveChanges();
                             ModelState.Clear();
                             ViewBag.Message = "Registration Successful";
-                            return RedirectToAction("Index");
+
+                            var emailpassword = "abhibobby3";
+                            var sub = "Sample application Registration";
+                            var body = "You have been succesfully registered in Sample application";
+
+
+                            RegEmail(user.Email, sub, body, emailpassword);
+
+                            return RedirectToAction("Index","Home");
                         }
+                       
                         ViewBag.Message = "User Alredy Exixts!!!!!!!!!!";
                         return View();
 
@@ -174,7 +186,7 @@ namespace Loginapplication.Controllers
                 catch (Exception e)
                 {
                     ViewBag.Message = "Some exception occured" + e;
-                    return View();
+                    return View("Error");
                 }
 
             }
@@ -346,7 +358,38 @@ namespace Loginapplication.Controllers
         }
 
 
-      
+        public void RegEmail(string receiver, string subject, string message, string passwords)
+        {
+            try
+            {
+                var senderEmail = new MailAddress("abhishekabhi347@gmail.com", "abhi");
+                var receiverEmail = new MailAddress(receiver, "Receiver");
+                var password = passwords;
+                var sub = subject;
+                var body = message;
+                var smtp = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Credentials = new NetworkCredential(senderEmail.Address, password)
+                };
+                using (var mess = new MailMessage(senderEmail, receiverEmail)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                
+                    smtp.Send(senderEmail.Address, receiverEmail.Address, sub, body);                
+
+                ViewBag.Message = "MailSent";
+
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = "Some Error";
+            }
+
+        }
 
     }
 }
