@@ -33,4 +33,9 @@ namespace Loginapplication.Models
             base.Seed(context);
         }
     }
+
+    public class UserInitilizier : DropCreateDatabaseIfModelChanges<LoginDbContext>
+    {
+
+    }
 }

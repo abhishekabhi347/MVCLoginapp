@@ -7,23 +7,26 @@ using System.Web.SessionState;
 using Loginapplication.Models;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Runtime.Remoting.Contexts;
+using System.IO;
 
 namespace Loginapplication.Controllers
 {
-    // [SessionState(SessionStateBehavior.Default)]
 
-
+    [SessionState(SessionStateBehavior.Default)]
     public class HomeController : Controller
     {
         [HttpGet]
         public ActionResult Index()
         {
+            //Session.Abandon();
 
             using (EmpDbContext dba = new EmpDbContext())
             {
-                var ado = dba.Employees.ToList();              
+                var ado = dba.Employees.ToList();
                 return View();
             }
+            //return View();
         }
 
         [HttpPost]
@@ -31,6 +34,7 @@ namespace Loginapplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 try
                 {
                     using (LoginDbContext db = new LoginDbContext())
@@ -55,6 +59,8 @@ namespace Loginapplication.Controllers
                                 Session["EmpID"] = Convert.ToInt32(result.Empid);
                                 Session["RoleID"] = Convert.ToInt32(result.Roleid);
                                 Session["Role"] = Convert.ToString(getrole.RoleName);
+                                Session["SessionExpire"] = false;
+
                                 return RedirectToAction("About");
                             }
                             ViewBag.Message = "Invalid User Name or Password";
@@ -112,6 +118,7 @@ namespace Loginapplication.Controllers
 
         public ActionResult LogOut()
         {
+            Session.Clear();
             Session.Abandon();
             ViewBag.Message = "Succesfully Logged Out";
             return RedirectToAction("Index");
@@ -124,8 +131,8 @@ namespace Loginapplication.Controllers
             var p = new User();
             using (EmpDbContext db = new EmpDbContext())
             {
-               
-                p.RoleList = db.Roles.ToList();                
+
+                p.RoleList = db.Roles.ToList();
             }
             return View(p);
             //return View();
@@ -338,11 +345,8 @@ namespace Loginapplication.Controllers
             }
         }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    this.empDbContext.Dispose();
-        //    base.Dispose(disposing);
-        //}
+
+      
 
     }
 }

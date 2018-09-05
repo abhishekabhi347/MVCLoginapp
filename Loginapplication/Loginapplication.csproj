@@ -164,7 +164,6 @@
     <Compile Include="Models\role.cs" />
     <Compile Include="Models\Technologies.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UsersInitilizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +185,44 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Google material design\material.css" />
+    <Content Include="Google material design\material.js" />
+    <Content Include="Google material design\material.min.css" />
+    <Content Include="Google material design\material.min.js" />
+    <Content Include="MDB Free\css\addons\datatables.css" />
+    <Content Include="MDB Free\css\addons\datatables.min.css" />
+    <Content Include="MDB Free\css\mdb.css" />
+    <Content Include="MDB Free\css\mdb.min.css" />
+    <Content Include="MDB Free\css\style.min.css" />
+    <Content Include="MDB Free\img\lightbox\default-skin.png" />
+    <Content Include="MDB Free\img\lightbox\default-skin.svg" />
+    <Content Include="MDB Free\img\lightbox\preloader.gif" />
+    <Content Include="MDB Free\img\overlays\01.png" />
+    <Content Include="MDB Free\img\overlays\02.png" />
+    <Content Include="MDB Free\img\overlays\03.png" />
+    <Content Include="MDB Free\img\overlays\04.png" />
+    <Content Include="MDB Free\img\overlays\05.png" />
+    <Content Include="MDB Free\img\overlays\06.png" />
+    <Content Include="MDB Free\img\overlays\07.png" />
+    <Content Include="MDB Free\img\overlays\08.png" />
+    <Content Include="MDB Free\img\overlays\09.png" />
+    <Content Include="MDB Free\img\svg\arrow_left.svg" />
+    <Content Include="MDB Free\img\svg\arrow_right.svg" />
+    <Content Include="MDB Free\index.html" />
+    <Content Include="MDB Free\js\addons\datatables.js" />
+    <Content Include="MDB Free\js\addons\datatables.min.js" />
+    <Content Include="MDB Free\js\mdb.js" />
+    <Content Include="MDB Free\js\mdb.min.js" />
+    <Content Include="MDB Free\js\modules\chart.js" />
+    <Content Include="MDB Free\js\modules\enhanced-modals.js" />
+    <Content Include="MDB Free\js\modules\forms-free.js" />
+    <Content Include="MDB Free\js\modules\jquery.easing.js" />
+    <Content Include="MDB Free\js\modules\scrolling-navbar.js" />
+    <Content Include="MDB Free\js\modules\velocity.js" />
+    <Content Include="MDB Free\js\modules\velocity.min.js" />
+    <Content Include="MDB Free\js\modules\waves.js" />
+    <Content Include="MDB Free\js\modules\wow.js" />
+    <Content Include="MDB Free\README.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -213,6 +250,66 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="MDB Free\font\roboto\Roboto-Bold.eot" />
+    <Content Include="MDB Free\font\roboto\Roboto-Bold.ttf" />
+    <Content Include="MDB Free\font\roboto\Roboto-Bold.woff" />
+    <Content Include="MDB Free\font\roboto\Roboto-Bold.woff2" />
+    <Content Include="MDB Free\font\roboto\Roboto-Light.eot" />
+    <Content Include="MDB Free\font\roboto\Roboto-Light.ttf" />
+    <Content Include="MDB Free\font\roboto\Roboto-Light.woff" />
+    <Content Include="MDB Free\font\roboto\Roboto-Light.woff2" />
+    <Content Include="MDB Free\font\roboto\Roboto-Medium.eot" />
+    <Content Include="MDB Free\font\roboto\Roboto-Medium.ttf" />
+    <Content Include="MDB Free\font\roboto\Roboto-Medium.woff" />
+    <Content Include="MDB Free\font\roboto\Roboto-Medium.woff2" />
+    <Content Include="MDB Free\font\roboto\Roboto-Regular.eot" />
+    <Content Include="MDB Free\font\roboto\Roboto-Regular.ttf" />
+    <Content Include="MDB Free\font\roboto\Roboto-Regular.woff" />
+    <Content Include="MDB Free\font\roboto\Roboto-Regular.woff2" />
+    <Content Include="MDB Free\font\roboto\Roboto-Thin.eot" />
+    <Content Include="MDB Free\font\roboto\Roboto-Thin.ttf" />
+    <Content Include="MDB Free\font\roboto\Roboto-Thin.woff" />
+    <Content Include="MDB Free\font\roboto\Roboto-Thin.woff2" />
+    <Content Include="MDB Free\License.pdf" />
+    <Content Include="MDB Free\scss\addons\_datatables.scss" />
+    <Content Include="MDB Free\scss\core\bootstrap\_functions.scss" />
+    <Content Include="MDB Free\scss\core\bootstrap\_variables.scss" />
+    <Content Include="MDB Free\scss\core\_colors.scss" />
+    <Content Include="MDB Free\scss\core\_global.scss" />
+    <Content Include="MDB Free\scss\core\_helpers.scss" />
+    <Content Include="MDB Free\scss\core\_masks.scss" />
+    <Content Include="MDB Free\scss\core\_mixins.scss" />
+    <Content Include="MDB Free\scss\core\_typography.scss" />
+    <Content Include="MDB Free\scss\core\_variables.scss" />
+    <Content Include="MDB Free\scss\core\_waves.scss" />
+    <Content Include="MDB Free\scss\free\_animations-basic.scss" />
+    <Content Include="MDB Free\scss\free\_animations-extended.scss" />
+    <Content Include="MDB Free\scss\free\_badges.scss" />
+    <Content Include="MDB Free\scss\free\_buttons.scss" />
+    <Content Include="MDB Free\scss\free\_cards.scss" />
+    <Content Include="MDB Free\scss\free\_carousels.scss" />
+    <Content Include="MDB Free\scss\free\_depreciated.scss" />
+    <Content Include="MDB Free\scss\free\_dropdowns.scss" />
+    <Content Include="MDB Free\scss\free\_footers.scss" />
+    <Content Include="MDB Free\scss\free\_forms.scss" />
+    <Content Include="MDB Free\scss\free\_input-group.scss" />
+    <Content Include="MDB Free\scss\free\_list-group.scss" />
+    <Content Include="MDB Free\scss\free\_modals.scss" />
+    <Content Include="MDB Free\scss\free\_msc.scss" />
+    <Content Include="MDB Free\scss\free\_navbars.scss" />
+    <Content Include="MDB Free\scss\free\_pagination.scss" />
+    <Content Include="MDB Free\scss\free\_switch.scss" />
+    <Content Include="MDB Free\scss\free\_tables.scss" />
+    <Content Include="MDB Free\scss\mdb.scss" />
+    <Content Include="MDB Free\scss\style.scss" />
+    <Content Include="MDB Free\scss\_custom-skin.scss" />
+    <Content Include="MDB Free\scss\_custom-styles.scss" />
+    <Content Include="MDB Free\scss\_custom-variables.scss" />
+    <Content Include="Google material design\bower.json" />
+    <Content Include="Google material design\LICENSE" />
+    <Content Include="Google material design\material.min.css.map" />
+    <Content Include="Google material design\material.min.js.map" />
+    <Content Include="Google material design\package.json" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -253,7 +350,6 @@
     <Content Include="Views\Home\EmpDetails.cshtml" />
     <Content Include="Views\Home\AddEmp.cshtml" />
     <Content Include="Views\Technology\Index.cshtml" />
-    <Content Include="Views\Technology\Edit.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -268,6 +364,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Assets\UploadedImage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

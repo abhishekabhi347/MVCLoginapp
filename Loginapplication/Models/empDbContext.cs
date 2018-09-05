@@ -16,9 +16,14 @@ namespace Loginapplication.Models
 
         public DbSet<Employee> Employees { get; set; }
 
+
         public DbSet<Technologies> Technologies { get; set; }
 
         public DbSet<Role> Roles { get; set; }
+
+
+
+
 
 
 

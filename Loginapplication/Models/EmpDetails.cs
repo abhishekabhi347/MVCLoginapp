@@ -45,5 +45,9 @@ namespace Loginapplication.Models
 
 
         public bool IsActive { get; set; } = true;
+
+        
+
+
     }
 }
