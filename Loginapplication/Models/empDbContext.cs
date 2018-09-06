@@ -10,8 +10,9 @@ namespace Loginapplication.Models
 {
     public class EmpDbContext : DbContext
     {
-        public EmpDbContext() : base("name=LoginDbCS") {
-            //Database.SetInitializer<EmpDbContext>(new DropCreateDatabaseIfModelChanges<EmpDbContext>());
+        public EmpDbContext() : base("name=LoginDbCS")
+        {
+            //Database.SetInitializer(new EmpInitilizier());
         }
 
         public DbSet<Employee> Employees { get; set; }
@@ -21,6 +22,7 @@ namespace Loginapplication.Models
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<FileUpload> FileUploads { get; set; }
 
 
 

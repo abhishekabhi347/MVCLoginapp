@@ -153,12 +153,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
+    <Compile Include="Controllers\UtilityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\empDbContext.cs" />
     <Compile Include="Models\EmpDetails.cs" />
     <Compile Include="Models\EmpInitilizier.cs" />
+    <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\LoginDbContext.cs" />
     <Compile Include="Models\role.cs" />
@@ -361,6 +363,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Technology\_Create.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Utility\Index.cshtml" />
+    <Content Include="Views\Utility\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

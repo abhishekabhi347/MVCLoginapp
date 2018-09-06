@@ -24,7 +24,7 @@ namespace Loginapplication.Controllers
         public ActionResult Index()
         {
             //Session.Abandon();
-           
+
 
             using (EmpDbContext dba = new EmpDbContext())
             {
@@ -35,11 +35,11 @@ namespace Loginapplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string UserName,string Password)
+        public ActionResult Index(string UserName, string Password)
         {
             if (ModelState.IsValid)
             {
-                
+
                 try
                 {
                     using (LoginDbContext db = new LoginDbContext())
@@ -130,7 +130,7 @@ namespace Loginapplication.Controllers
         }
 
 
-
+        [HttpGet]
         public ActionResult Register()
         {
             var p = new User();
@@ -145,7 +145,6 @@ namespace Loginapplication.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Bind(Include = "EmpName,Password,Email,Checkstatus,UserName")] 
         public ActionResult Register(User user)
         {
             if (ModelState.IsValid)
@@ -168,16 +167,16 @@ namespace Loginapplication.Controllers
                             ModelState.Clear();
                             ViewBag.Message = "Registration Successful";
 
-                            var emailpassword = "abhibobby3";
-                            var sub = "Sample application Registration";
-                            var body = "You have been succesfully registered in Sample application";
+                            //var emailpassword = "********";
+                            //var sub = "Sample application Registration";
+                            //var body = "You have been succesfully registered in Sample application";
 
 
-                            RegEmail(user.Email, sub, body, emailpassword);
+                            //RegEmail(user.Email, sub, body, emailpassword);
 
-                            return RedirectToAction("Index","Home");
+                            return RedirectToAction("Index", "Home");
                         }
-                       
+
                         ViewBag.Message = "User Alredy Exixts!!!!!!!!!!";
                         return View();
 
@@ -210,30 +209,44 @@ namespace Loginapplication.Controllers
                 return RedirectToAction("Index");
             }
         }
+
         [HttpPost]
         public ActionResult AddEmp(Employee employee)
         {
             if (Session["EmpName"] != null)
             {
                 try
-            {
-                if (ModelState.IsValid)
                 {
-                    using (EmpDbContext empDb = new EmpDbContext())
+                    if (ModelState.IsValid)
                     {
-                        empDb.Employees.Add(employee);
-                        empDb.SaveChanges();
-                    }
-                    ModelState.Clear();
-                    return RedirectToAction("Contact");
-                }
-                return View();
+                        using (EmpDbContext empDb = new EmpDbContext())
+                        {
+                            using (DbContextTransaction transaction = empDb.Database.BeginTransaction())
+                            {
+                                try
+                                {
+                                    empDb.Employees.Add(employee);
+                                    empDb.SaveChanges();
+                                    transaction.Commit();
+                                }
+                                catch (Exception ex)
+                                {
+                                    transaction.Rollback();
+                                    Console.WriteLine("Error occurred.");
+                                }
+                            }
 
-            }
-            catch (Exception ex)
-            {
-                return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
-            }
+                        }
+                        ModelState.Clear();
+                        return RedirectToAction("Contact");
+                    }
+                    return View();
+
+                }
+                catch (Exception ex)
+                {
+                    return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
+                }
             }
             else
             {
@@ -250,7 +263,7 @@ namespace Loginapplication.Controllers
                 {
                     var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
 
-                    if(result != null)
+                    if (result != null)
                     {
                         return View(result);
                     }
@@ -258,7 +271,7 @@ namespace Loginapplication.Controllers
                     {
                         return View();
                     }
-                }                   
+                }
             }
             else
             {
@@ -266,9 +279,6 @@ namespace Loginapplication.Controllers
             }
 
         }
-
-        
-
 
         [HttpPost]
         public ActionResult EditEmp(Employee employee)
@@ -298,9 +308,9 @@ namespace Loginapplication.Controllers
                     return RedirectToAction("Contact");
                 }
                 catch (Exception ex)
-            {
-                return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
-            }
+                {
+                    return View("Error", new HandleErrorInfo(ex, "EmployeeInfo", "Create"));
+                }
                 // return RedirectToAction("EditEmp");
             }
             else
@@ -349,7 +359,7 @@ namespace Loginapplication.Controllers
                     empDb.SaveChanges();
 
                 }
-                    return RedirectToAction("Contact");
+                return RedirectToAction("Contact");
             }
             else
             {
@@ -357,7 +367,8 @@ namespace Loginapplication.Controllers
             }
         }
 
-
+        //Email Concept////////
+        [NonAction]
         public void RegEmail(string receiver, string subject, string message, string passwords)
         {
             try
@@ -378,8 +389,8 @@ namespace Loginapplication.Controllers
                     Subject = subject,
                     Body = body
                 })
-                
-                    smtp.Send(senderEmail.Address, receiverEmail.Address, sub, body);                
+
+                    smtp.Send(senderEmail.Address, receiverEmail.Address, sub, body);
 
                 ViewBag.Message = "MailSent";
 

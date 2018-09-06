@@ -28,7 +28,11 @@
         function RegistrationRedirect() {
             location.href = '@Url.Content("~/Home/Register/")';
         }
+
+        window.history.forward();
+        function noBack() { window.history.forward(); }
     </script>
+
     <style>
         body {
             background: #da4453; /* fallback for old browsers */
@@ -37,53 +41,53 @@
         }
     </style>
 </head>
-<body>
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
     <div class="container">
         <div class="row">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                
-                    <div class="card card-signin my-5">
 
-                        <div class="card-body">
-                            <h4 class="card-title text-center font-weight-bold" style="font-family:'Franklin Gothic';">Log In</h4>
-                            @using (Html.BeginForm(new { @class = "form-signin" }))
-                            {
-                                @Html.AntiForgeryToken()
+                <div class="card card-signin my-5">
 
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="card-body">
+                        <h4 class="card-title text-center font-weight-bold" style="font-family:'Franklin Gothic';">Log In</h4>
+                        @using (Html.BeginForm(new { @class = "form-signin" }))
+                        {
+                            @Html.AntiForgeryToken()
 
-                                <br />
-                                <div class="form-label-group">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label font-weight-bold" })
-                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            <br />
+                            <div class="form-label-group">
 
-                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label font-weight-bold" })
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
 
-                                </div>
-                                <br />
-                                <div class="form-label-group">
-                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label font-weight-bold" })
-                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <div class="form-label-group">
+                                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label font-weight-bold" })
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
 
-                                </div>
-                                <br />
-                                <br />
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
-                                <button class=" btn-block mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background:teal" type="submit">Sign In</button>
-                                <button id="btnSignup" name="btnSignup" class=" btn-block mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" onclick="RegistrationRedirect();">Sign Up</button>
-                                <br />
-                                <label class="text-center text-danger">@ViewBag.Message</label>
-                            }
-                        </div>
+                            </div>
+                            <br />
+                            <br />
+
+                            <button class=" btn-block mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" style="background:teal" type="submit">Sign In</button>
+                            <button id="btnSignup" name="btnSignup" class=" btn-block mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="button" onclick="RegistrationRedirect();">Sign Up</button>
+                            <br />
+                            <label class="text-center text-danger">@ViewBag.Message</label>
+                        }
                     </div>
-               
+                </div>
+
             </div>
         </div>
     </div>
 
-  
+
 </body>
 </html>
