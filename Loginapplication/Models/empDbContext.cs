@@ -24,7 +24,9 @@ namespace Loginapplication.Models
 
         public DbSet<FileUpload> FileUploads { get; set; }
 
+        public DbSet<Country> Countries { get; set; }
 
+        public DbSet<States> States { get; set; }
 
 
 

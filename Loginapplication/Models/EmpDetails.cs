@@ -37,8 +37,9 @@ namespace Loginapplication.Models
 
         public bool IsEmployeeRetired { get; set; }
 
-        [StringLength(50)]
-        public string Country { get; set; }
+        public int? CountryId { get; set; }
+
+        public int? StateId { get; set; }
 
         [StringLength(50)]
         public string Company { get; set; }

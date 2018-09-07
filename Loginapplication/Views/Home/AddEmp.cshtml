@@ -55,10 +55,19 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group md-form">
-                        @Html.LabelFor(model => model.Country, htmlAttributes: new { @for = "txtcon" })
-                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "txtcon" } })
-                        @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                    <div class="form-group ">
+                        @if (ViewBag.CountryList != null)
+                        {
+                            <label for="countryId">Country</label>
+                            @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, "-- Select Country--", new { @class = "form-control" })
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="StateId">State</label>
+                        @Html.DropDownListFor(m => m.StateId, new SelectList(""), "--Select State--", new { @class = "form-control" })
+
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -69,8 +78,8 @@
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <br />
 
             <div class="form-group">
@@ -94,6 +103,33 @@
 
 }
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $("#CountryId").change(function () {
+
+            var countryId = $(this).val();
+            //debugger
+            $.ajax({
+                type: "Post",
+                url: "/Home/GetStateList?CountryId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+                    //debugger
+                    $("#StateId").empty();
+                    $("#StateId").append(response);
+
+                }
+
+            });
+
+        });
+
+    });
+
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

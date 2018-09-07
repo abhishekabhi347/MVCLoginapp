@@ -110,6 +110,8 @@ namespace Loginapplication.Controllers
         {
             if (Session["EmpName"] != null)
             {
+                
+
                 ViewBag.Message = "Your contact page.";
                 var employees = new EmpDbContext();
                 return View(employees.Employees.ToList());
@@ -202,6 +204,7 @@ namespace Loginapplication.Controllers
         {
             if (Session["EmpName"] != null)
             {
+                ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
                 return View();
             }
             else
@@ -259,12 +262,22 @@ namespace Loginapplication.Controllers
         {
             if (Session["EmpName"] != null)
             {
+                
                 using (EmpDbContext empDb = new EmpDbContext())
                 {
                     var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
 
                     if (result != null)
                     {
+
+                        ViewBag.CountryList = new SelectList(GetCountryList(), "CountryId", "CountryName");
+                        if(result.CountryId != null)
+                        {
+                            var coID = (int)result.CountryId;
+                            ViewBag.StatesList = new SelectList(GetStatesList(coID), "StateId", "StateName");
+                        }
+                        
+
                         return View(result);
                     }
                     else
@@ -294,7 +307,8 @@ namespace Loginapplication.Controllers
                                     select a).FirstOrDefault();
 
                         data.Company = employee.Company;
-                        data.Country = employee.Country;
+                        data.CountryId = employee.CountryId;
+                        data.StateId = employee.StateId;
                         data.Description = employee.Description;
                         data.IsEmployeeRetired = employee.IsEmployeeRetired;
                         data.Name = employee.Name;
@@ -400,6 +414,39 @@ namespace Loginapplication.Controllers
                 ViewBag.Error = "Some Error";
             }
 
+        }
+
+
+        public List<Country> GetCountryList()
+        {
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                List<Country> countries = db.Countries.ToList();
+
+                return countries;
+            }
+
+        }
+
+        public List<States> GetStatesList(int couID)
+        {
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                List<States> states = db.States.Where(x=> x.CountryId == couID).ToList();
+
+                return states;
+            }
+
+        }
+
+        public ActionResult GetStateList(int CountryId)
+        {
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                List<States> stateList = db.States.Where(x => x.CountryId == CountryId).ToList();
+                ViewBag.StateOptions = new SelectList(stateList, "StateId", "StateName");
+                return PartialView("_StateOptionPartial");
+            }
         }
 
     }
