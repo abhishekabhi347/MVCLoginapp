@@ -157,10 +157,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809070930093_InitialCreate.cs" />
+    <Compile Include="Migrations\201809070930093_InitialCreate.Designer.cs">
+      <DependentUpon>201809070930093_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Countries.cs" />
-    <Compile Include="Models\empDbContext.cs" />
+    <Compile Include="Context\empDbContext.cs" />
     <Compile Include="Models\EmpDetails.cs" />
-    <Compile Include="Models\EmpInitilizier.cs" />
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\role.cs" />
@@ -382,6 +386,11 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201809070930093_InitialCreate.resx">
+      <DependentUpon>201809070930093_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

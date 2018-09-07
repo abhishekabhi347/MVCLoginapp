@@ -1,15 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-
-namespace Loginapplication.Models
+namespace Loginapplication.Migrations
 {
-    public class EmpInitilizier : DropCreateDatabaseIfModelChanges<EmpDbContext>
+    using Loginapplication.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<Loginapplication.Models.EmpDbContext>
     {
-        protected override void Seed(EmpDbContext context)
+        public Configuration()
         {
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(Loginapplication.Models.EmpDbContext context)
+        {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data.
+
             var Emp = new List<Employee>()
             {
                 new Employee { Name="Abhishek", Company="ISSI", Description="Dev", IsEmployeeRetired=false, IsActive =true },
@@ -47,19 +58,17 @@ namespace Loginapplication.Models
 
             };
 
-            roles.ForEach(x => context.Roles.Add(x));
+            roles.ForEach(x => context.Roles.AddOrUpdate(x));
 
-            Emp.ForEach(x => context.Employees.Add(x));
+            Emp.ForEach(x => context.Employees.AddOrUpdate(x));
 
-            Countries.ForEach(x => context.Countries.Add(x));
+            Countries.ForEach(x => context.Countries.AddOrUpdate(x));
 
-            State.ForEach(x => context.States.Add(x));
+            State.ForEach(x => context.States.AddOrUpdate(x));
 
             context.SaveChanges();
 
-            base.Seed(context);
+            //base.Seed(context);
         }
     }
-
-   
 }

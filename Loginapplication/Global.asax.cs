@@ -19,7 +19,7 @@ namespace Loginapplication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer(new EmpInitilizier());
+            //Database.SetInitializer(new EmpInitilizier());
 
             Application["UsersOnline"] = 0;
         }
@@ -47,9 +47,9 @@ namespace Loginapplication
             //if (cookieAdded)
             //{
                 Session["GUID"] = NewID;
-                Response.Write("<br/> New Session ID Is : " + NewID);
-                Response.Write("<br/> Old Session ID Is : " + OldID);
-                Response.Write("<br/> No of Users : " + Application["UsersOnline"]);
+                //Response.Write("<br/> New Session ID Is : " + NewID);
+                //Response.Write("<br/> Old Session ID Is : " + OldID);
+                //Response.Write("<br/> No of Users : " + Application["UsersOnline"]);
             //}
             //else
             //{

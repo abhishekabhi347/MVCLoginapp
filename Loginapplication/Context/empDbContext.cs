@@ -10,7 +10,7 @@ namespace Loginapplication.Models
 {
     public class EmpDbContext : DbContext
     {
-        public EmpDbContext() : base("name=LoginDbCS")
+        public EmpDbContext() : base("name=DefaultCS")
         {
             //Database.SetInitializer(new EmpInitilizier());
         }
