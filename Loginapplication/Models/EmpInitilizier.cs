@@ -61,8 +61,5 @@ namespace Loginapplication.Models
         }
     }
 
-    public class UserInitilizier : DropCreateDatabaseIfModelChanges<LoginDbContext>
-    {
-
-    }
+   
 }

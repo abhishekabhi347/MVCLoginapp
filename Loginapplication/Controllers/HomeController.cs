@@ -42,7 +42,7 @@ namespace Loginapplication.Controllers
 
                 try
                 {
-                    using (LoginDbContext db = new LoginDbContext())
+                    using (EmpDbContext db = new EmpDbContext())
                     {
                         // var result = db.Users.FirstOrDefault(u => u.UserName == UserName && u.Password == Password);
 
@@ -153,7 +153,7 @@ namespace Loginapplication.Controllers
             {
                 try
                 {
-                    using (LoginDbContext db = new LoginDbContext())
+                    using (EmpDbContext db = new EmpDbContext())
                     {
 
                         var chkUser = (from s in db.Users where s.UserName == user.UserName || s.Email == user.Email select s).FirstOrDefault();

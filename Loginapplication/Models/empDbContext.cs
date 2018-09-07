@@ -28,7 +28,7 @@ namespace Loginapplication.Models
 
         public DbSet<States> States { get; set; }
 
-
+        public virtual DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -37,6 +37,18 @@ namespace Loginapplication.Models
 
             modelBuilder.Types().Configure(t => t.MapToStoredProcedures());
 
+            modelBuilder.Entity<User>()
+                .Property(e => e.EmpName)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.Checkstatus)
+                .IsFixedLength()
+                .IsUnicode(false);
+
+            modelBuilder.Entity<User>()
+                .Property(e => e.UserName)
+                .IsUnicode(false);
 
         }
     }

@@ -163,7 +163,6 @@
     <Compile Include="Models\EmpInitilizier.cs" />
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Helper.cs" />
-    <Compile Include="Models\LoginDbContext.cs" />
     <Compile Include="Models\role.cs" />
     <Compile Include="Models\States.cs" />
     <Compile Include="Models\Technologies.cs" />
