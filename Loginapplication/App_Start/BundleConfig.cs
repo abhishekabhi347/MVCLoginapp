@@ -22,13 +22,15 @@ namespace Loginapplication
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/MDB Free/js/mdb.min.js",
-                      "~/Google material design/material.min.js"));
+                      "~/Google material design/material.min.js",
+                      "~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/MDB Free/css/mdb.min.css",
-                      "~/Google material design/material.min.css"));
+                      "~/Google material design/material.min.css",
+                      "~/Content/datepicker.css"));
             //bundles.Add(new StyleBundle("~/MDB/css").Include(
                 
             //    ));

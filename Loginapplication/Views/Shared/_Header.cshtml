@@ -1,4 +1,6 @@
-﻿
+﻿@model IEnumerable<Loginapplication.Models.MenuManagement>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-auto">
     <div style="margin-right:15px" class="d-none d-sm-block">
         <img src="~/Assets/ISSIlogo.png" alt="logo" class="img-responsive" height="40" width="60" />
@@ -27,37 +29,59 @@
         </ul>
     </div>
 </nav>
-<nav class="mb-4 navbar navbar-expand-lg bg-primary navbar-dark " >
-    @*<a class="navbar-brand font-bold" href="#">Navbar</a>*@
+
+<nav class="mb-4 navbar navbar-expand-lg bg-primary navbar-dark ">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-        <ul class="navbar-nav ">
-            <li class="nav-item">
-                @*<a class="nav-link" href="#"><i class="fa fa-envelope"></i> Contact <span class="sr-only">(current)</span></a>*@
-                @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link mdl-js-ripple-effect mdl-button mdl-js-button" })
-            </li>
-            <li class="nav-item">
-                @*<a class="nav-link" href="#"><i class="fa fa-gear"></i> Settings</a>*@
-                @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link mdl-js-ripple-effect mdl-button mdl-js-button" })
-            </li>
-            <li class="nav-item">
-                @Html.ActionLink("Technologies", "Index", "Technology", null, new { @class = "nav-link mdl-js-ripple-effect mdl-button mdl-js-button" })
-            </li>
-            
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle  mdl-js-ripple-effect mdl-button mdl-js-button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Utilities</a>
-                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                    @Html.ActionLink("File Upload", "Create", "Utility", null, new { @class = "dropdown-item" })
-                    <a class="dropdown-item" href="#">Actions</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
+        <ul class="navbar-nav">
+            @{foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0).Distinct().OrderBy(x => x.Menu_ID).ToList())
+                {
+                    if (item.ACTION_NAME != "")
+                    {
+                        <li class="nav-item">
+                            <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
+                                @item.Menu_NAME
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle mdl-js-ripple-effect mdl-button mdl-js-button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @item.Menu_NAME
+                            </a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                @{foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
+                                    {
+                                        <a href="/@firstItem.CONTROLLER_NAME/@firstItem.ACTION_NAME" class = "dropdown-item">
+                                            @firstItem.Menu_NAME
+                                        </a>
+                                        @*<ul>
+                                            @foreach (var secondItem in (Model.Where(s => s.Menu_Parent_ID == firstItem.Menu_ID).ToList()))
+                                            {
+                                                <li>
+                                                    <a href="/@secondItem.CONTROLLER_NAME/@secondItem.ACTION_NAME" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
+                                                        @secondItem.Menu_NAME
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>*@
+                                    }
+                                }
+
+                            </div>
+                           
+                        </li>
+
+                    }
+
+
+
+                }
+            }
 
         </ul>
     </div>
 </nav>
-
-

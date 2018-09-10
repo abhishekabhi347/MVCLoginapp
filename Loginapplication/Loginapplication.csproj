@@ -53,6 +53,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.13\lib\itextsharp.xmlworker.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.DependencyCollector, Version=2.7.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.7.2\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
     </Reference>
@@ -157,13 +163,18 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809070930093_InitialCreate.cs" />
-    <Compile Include="Migrations\201809070930093_InitialCreate.Designer.cs">
-      <DependentUpon>201809070930093_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201809100631361_InitialMigrations.cs" />
+    <Compile Include="Migrations\201809100631361_InitialMigrations.Designer.cs">
+      <DependentUpon>201809100631361_InitialMigrations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809101040117_Employeedetails.cs" />
+    <Compile Include="Migrations\201809101040117_Employeedetails.Designer.cs">
+      <DependentUpon>201809101040117_Employeedetails.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Context\empDbContext.cs" />
+    <Compile Include="Models\MenuManagement.cs" />
     <Compile Include="Models\EmpDetails.cs" />
     <Compile Include="Models\FileUpload.cs" />
     <Compile Include="Models\Helper.cs" />
@@ -184,6 +195,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datepicker.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Login.css" />
@@ -232,6 +244,7 @@
     <Content Include="MDB Free\js\modules\waves.js" />
     <Content Include="MDB Free\js\modules\wow.js" />
     <Content Include="MDB Free\README.txt" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -390,8 +403,11 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809070930093_InitialCreate.resx">
-      <DependentUpon>201809070930093_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809100631361_InitialMigrations.resx">
+      <DependentUpon>201809100631361_InitialMigrations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809101040117_Employeedetails.resx">
+      <DependentUpon>201809101040117_Employeedetails.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

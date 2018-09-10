@@ -34,7 +34,13 @@ namespace Loginapplication.Models
         [Required(ErrorMessage ="User Name is Mandatory")]
         public string UserName { get; set; }
 
-        
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(15)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
+        public string PhoneNo { get; set; }
+
+
         [Display(Name ="Choose Role")]
         public int? Roleid { get; set; }
 

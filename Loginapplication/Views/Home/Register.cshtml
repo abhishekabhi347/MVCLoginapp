@@ -55,7 +55,7 @@
             <div class="card-body px-lg-5 pt-0">
 
                 <!-- Form -->
-                <form class="text-center" >
+                <form class="text-center" method="post" >
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-row">
@@ -106,8 +106,11 @@
                     <div class="form-row">
                         <div class="col">
                             <div class="md-form text-left">
-                                <input type="text" id="materialRegisterFormPhone" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
-                                <label for="materialRegisterFormPhone">Phone number</label>
+                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label " })
+                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                @*<input type="text" id="materialRegisterFormPhone" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
+                                <label for="materialRegisterFormPhone">Phone number</label>*@
                                 <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-left text-muted mb-4">
                                     Optional - for two step authentication
                                 </small>

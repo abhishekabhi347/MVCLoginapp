@@ -16,15 +16,16 @@
             background: #ECE9E6; /* fallback for old browsers */
             background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6); /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-           
         }
     </style>
+
+    @Html.Action("GetMenuList", "Home")
 </head>
 <body id="bdstyles">
     @if (Session["EmpName"] != null)
     {
 
-        @Html.Partial("_Header");
+       // @Html.Partial("_Header");
     <div class="container body-content   z-depth-2 " style="background-color:white">
 
         @RenderBody()

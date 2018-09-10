@@ -1,6 +1,11 @@
-﻿using Loginapplication.Models;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+using Loginapplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -121,6 +126,44 @@ namespace Loginapplication.Controllers
             }
                 return RedirectToAction("Index", "Technology");
         }
+
+
+
+
+        public FileStreamResult pdf(int Id)
+        {
+            MemoryStream workStream = new MemoryStream();
+            Document document = new Document();
+            PdfWriter.GetInstance(document, workStream).CloseStream = false;
+
+            document.Open();
+
+            Font font_heading_1 = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 19, Font.BOLD);
+            Font font_body = FontFactory.GetFont(FontFactory.TIMES_ROMAN, 9);
+
+            // Create the heading paragraph with the headig font
+            Paragraph paragraph;
+            paragraph = new Paragraph("Hello world!", font_heading_1);
+
+            // Add a horizontal line below the headig text and add it to the paragraph
+            iTextSharp.text.pdf.draw.VerticalPositionMark seperator = new iTextSharp.text.pdf.draw.LineSeparator();
+            seperator.Offset = -6f;
+            paragraph.Add(seperator);
+
+            //document.Add(new Header("Technology","Technology Report"));
+            //document.Add(new Paragraph("Hello World"));
+            //document.Add(new Paragraph(DateTime.Now.ToString()));
+
+            document.Close();
+
+            byte[] byteInfo = workStream.ToArray();
+            workStream.Write(byteInfo, 0, byteInfo.Length);
+            workStream.Position = 0;
+
+            return new FileStreamResult(workStream, "application/pdf");
+        }
+
+
 
 
     }

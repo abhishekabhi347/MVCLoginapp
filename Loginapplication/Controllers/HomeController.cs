@@ -13,6 +13,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Loginapplication.Controllers
 {
@@ -312,6 +314,7 @@ namespace Loginapplication.Controllers
                         data.Description = employee.Description;
                         data.IsEmployeeRetired = employee.IsEmployeeRetired;
                         data.Name = employee.Name;
+                        data.EmpDate = employee.EmpDate;
                         data.IsActive = employee.IsActive;
 
                         empDb.Entry(data).State = EntityState.Modified;
@@ -448,6 +451,30 @@ namespace Loginapplication.Controllers
                 return PartialView("_StateOptionPartial");
             }
         }
+
+        public ActionResult GetMenuList()
+        {
+            try
+            {
+                using (EmpDbContext db = new EmpDbContext())
+                {
+
+                    var result = db.MenuManagement.ToList();
+
+                    return PartialView("_Header", result);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var error = ex.Message.ToString();
+                return Content("Error");
+            }
+        }
+
+
+
 
     }
 }

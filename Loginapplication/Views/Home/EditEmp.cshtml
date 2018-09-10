@@ -52,17 +52,17 @@
                 <div class="form-group ">
                     @if (ViewBag.CountryList != null)
                     {
-                        <label >Country</label>
+                        <label>Country</label>
                         @Html.DropDownListFor(m => m.CountryId, ViewBag.CountryList as SelectList, "-- Select Country--", new { @class = "form-control" })
                     }
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label >State</label>
+                    <label>State</label>
                     @if (ViewBag.StatesList != null)
                     {
-                        @Html.DropDownListFor(m => m.StateId, ViewBag.StatesList as SelectList, "--Select State--", new { @class = "form-control"})
+                        @Html.DropDownListFor(m => m.StateId, ViewBag.StatesList as SelectList, "--Select State--", new { @class = "form-control" })
                     }
                     else
                     {
@@ -78,6 +78,16 @@
                     @Html.LabelFor(model => model.Company, htmlAttributes: new { @for = "txtcom" })
                     @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control", @id = "txtcom" } })
                     @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmpDate)
+                    @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly = true })
+                    @Html.ValidationMessageFor(model => model.EmpDate, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -105,23 +115,20 @@
 
     $(document).ready(function () {
 
-        //var conid = $('#countryId option:selected').val();
-        //if (conid > 0) {
-        //    //alert(conid);
-        //    $.ajax({
-
-        //        type: "Post",
-        //        url: "/Home/GetStateList?CountryId=" + conid,
-        //        contentType: "html",
-        //        success: function (response) {
-        //            //debugger
-        //            $("#StateId").empty();
-        //            $("#StateId").append(response);
-
-        //        }
-
-        //    });
-        //}
+        $("#datepicker").datepicker({
+            //autoclose: true,
+            //todayHighlight: true
+            todayHighlight: true,
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            showDropdowns: true,
+            yearRange: "-100:+100",
+            format: 'mm/dd/yyyy',
+            setDate: new Date(),
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
         
 
         $("#CountryId").change(function () {

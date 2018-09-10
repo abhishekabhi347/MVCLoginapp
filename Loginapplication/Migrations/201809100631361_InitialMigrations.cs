@@ -3,7 +3,7 @@ namespace Loginapplication.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class InitialMigrations : DbMigration
     {
         public override void Up()
         {
@@ -43,6 +43,19 @@ namespace Loginapplication.Migrations
                         Checkstatus = c.String(),
                     })
                 .PrimaryKey(t => t.ImageId);
+            
+            CreateTable(
+                "dbo.MenuManagement",
+                c => new
+                    {
+                        Menu_ID = c.Int(nullable: false, identity: true),
+                        Menu_Parent_ID = c.Int(),
+                        Menu_NAME = c.String(nullable: false, maxLength: 100),
+                        CONTROLLER_NAME = c.String(maxLength: 100),
+                        ACTION_NAME = c.String(maxLength: 100),
+                        Checkstatus = c.String(maxLength: 2),
+                    })
+                .PrimaryKey(t => t.Menu_ID);
             
             CreateTable(
                 "dbo.Role",
@@ -90,6 +103,7 @@ namespace Loginapplication.Migrations
                         Password = c.String(nullable: false, maxLength: 500),
                         Email = c.String(maxLength: 200),
                         UserName = c.String(nullable: false, maxLength: 100, unicode: false),
+                        PhoneNo = c.String(maxLength: 15),
                         Roleid = c.Int(),
                         Vcode = c.String(),
                         Checkstatus = c.String(maxLength: 2, fixedLength: true, unicode: false),
@@ -252,6 +266,58 @@ namespace Loginapplication.Migrations
             );
             
             CreateStoredProcedure(
+                "dbo.MenuManagement_Insert",
+                p => new
+                    {
+                        Menu_Parent_ID = p.Int(),
+                        Menu_NAME = p.String(maxLength: 100),
+                        CONTROLLER_NAME = p.String(maxLength: 100),
+                        ACTION_NAME = p.String(maxLength: 100),
+                        Checkstatus = p.String(maxLength: 2),
+                    },
+                body:
+                    @"INSERT [dbo].[MenuManagement]([Menu_Parent_ID], [Menu_NAME], [CONTROLLER_NAME], [ACTION_NAME], [Checkstatus])
+                      VALUES (@Menu_Parent_ID, @Menu_NAME, @CONTROLLER_NAME, @ACTION_NAME, @Checkstatus)
+                      
+                      DECLARE @Menu_ID int
+                      SELECT @Menu_ID = [Menu_ID]
+                      FROM [dbo].[MenuManagement]
+                      WHERE @@ROWCOUNT > 0 AND [Menu_ID] = scope_identity()
+                      
+                      SELECT t0.[Menu_ID]
+                      FROM [dbo].[MenuManagement] AS t0
+                      WHERE @@ROWCOUNT > 0 AND t0.[Menu_ID] = @Menu_ID"
+            );
+            
+            CreateStoredProcedure(
+                "dbo.MenuManagement_Update",
+                p => new
+                    {
+                        Menu_ID = p.Int(),
+                        Menu_Parent_ID = p.Int(),
+                        Menu_NAME = p.String(maxLength: 100),
+                        CONTROLLER_NAME = p.String(maxLength: 100),
+                        ACTION_NAME = p.String(maxLength: 100),
+                        Checkstatus = p.String(maxLength: 2),
+                    },
+                body:
+                    @"UPDATE [dbo].[MenuManagement]
+                      SET [Menu_Parent_ID] = @Menu_Parent_ID, [Menu_NAME] = @Menu_NAME, [CONTROLLER_NAME] = @CONTROLLER_NAME, [ACTION_NAME] = @ACTION_NAME, [Checkstatus] = @Checkstatus
+                      WHERE ([Menu_ID] = @Menu_ID)"
+            );
+            
+            CreateStoredProcedure(
+                "dbo.MenuManagement_Delete",
+                p => new
+                    {
+                        Menu_ID = p.Int(),
+                    },
+                body:
+                    @"DELETE [dbo].[MenuManagement]
+                      WHERE ([Menu_ID] = @Menu_ID)"
+            );
+            
+            CreateStoredProcedure(
                 "dbo.Role_Insert",
                 p => new
                     {
@@ -404,14 +470,15 @@ namespace Loginapplication.Migrations
                         Password = p.String(maxLength: 500),
                         Email = p.String(maxLength: 200),
                         UserName = p.String(maxLength: 100, unicode: false),
+                        PhoneNo = p.String(maxLength: 15),
                         Roleid = p.Int(),
                         Vcode = p.String(),
                         Checkstatus = p.String(maxLength: 2, fixedLength: true, unicode: false),
                         Roledetails_Roleid = p.Int(),
                     },
                 body:
-                    @"INSERT [dbo].[User]([EmpName], [Password], [Email], [UserName], [Roleid], [Vcode], [Checkstatus], [Roledetails_Roleid])
-                      VALUES (@EmpName, @Password, @Email, @UserName, @Roleid, @Vcode, @Checkstatus, @Roledetails_Roleid)
+                    @"INSERT [dbo].[User]([EmpName], [Password], [Email], [UserName], [PhoneNo], [Roleid], [Vcode], [Checkstatus], [Roledetails_Roleid])
+                      VALUES (@EmpName, @Password, @Email, @UserName, @PhoneNo, @Roleid, @Vcode, @Checkstatus, @Roledetails_Roleid)
                       
                       DECLARE @Empid int
                       SELECT @Empid = [Empid]
@@ -432,6 +499,7 @@ namespace Loginapplication.Migrations
                         Password = p.String(maxLength: 500),
                         Email = p.String(maxLength: 200),
                         UserName = p.String(maxLength: 100, unicode: false),
+                        PhoneNo = p.String(maxLength: 15),
                         Roleid = p.Int(),
                         Vcode = p.String(),
                         Checkstatus = p.String(maxLength: 2, fixedLength: true, unicode: false),
@@ -439,7 +507,7 @@ namespace Loginapplication.Migrations
                     },
                 body:
                     @"UPDATE [dbo].[User]
-                      SET [EmpName] = @EmpName, [Password] = @Password, [Email] = @Email, [UserName] = @UserName, [Roleid] = @Roleid, [Vcode] = @Vcode, [Checkstatus] = @Checkstatus, [Roledetails_Roleid] = @Roledetails_Roleid
+                      SET [EmpName] = @EmpName, [Password] = @Password, [Email] = @Email, [UserName] = @UserName, [PhoneNo] = @PhoneNo, [Roleid] = @Roleid, [Vcode] = @Vcode, [Checkstatus] = @Checkstatus, [Roledetails_Roleid] = @Roledetails_Roleid
                       WHERE ([Empid] = @Empid)"
             );
             
@@ -471,6 +539,9 @@ namespace Loginapplication.Migrations
             DropStoredProcedure("dbo.Role_Delete");
             DropStoredProcedure("dbo.Role_Update");
             DropStoredProcedure("dbo.Role_Insert");
+            DropStoredProcedure("dbo.MenuManagement_Delete");
+            DropStoredProcedure("dbo.MenuManagement_Update");
+            DropStoredProcedure("dbo.MenuManagement_Insert");
             DropStoredProcedure("dbo.FileUpload_Delete");
             DropStoredProcedure("dbo.FileUpload_Update");
             DropStoredProcedure("dbo.FileUpload_Insert");
@@ -490,6 +561,7 @@ namespace Loginapplication.Migrations
             DropTable("dbo.Technologies");
             DropTable("dbo.States");
             DropTable("dbo.Role");
+            DropTable("dbo.MenuManagement");
             DropTable("dbo.FileUpload");
             DropTable("dbo.Employee");
             DropTable("dbo.Country");

@@ -31,6 +31,7 @@
                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @for = "txtname" })
                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "txtname" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                      
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -76,6 +77,15 @@
                         @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control", @id = "txtcom" } })
                         @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
                     </div>
+                </div>              
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmpDate)
+                            @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly=true})
+                        @Html.ValidationMessageFor(model => model.EmpDate, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
 
@@ -104,10 +114,29 @@
 }
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <script>
 
     $(document).ready(function () {
 
+        $("#datepicker").datepicker({
+            //autoclose: true,
+            //todayHighlight: true
+            todayHighlight: true,
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            showDropdowns: true,
+            yearRange: "-100:+100",
+            format: 'mm/dd/yyyy',
+            setDate: new Date(),
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        }).datepicker('update', new Date());
+       
+        
+
+      
         $("#CountryId").change(function () {
 
             var countryId = $(this).val();
@@ -128,6 +157,7 @@
         });
 
     });
+
 
 </script>
 

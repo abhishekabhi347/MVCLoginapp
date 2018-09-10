@@ -44,6 +44,11 @@ namespace Loginapplication.Models
         [StringLength(50)]
         public string Company { get; set; }
 
+        
+        [DataType(DataType.Date)]
+        [DisplayName("Date")]
+        public string EmpDate { get; set; }
+
 
         public bool IsActive { get; set; } = true;
 
