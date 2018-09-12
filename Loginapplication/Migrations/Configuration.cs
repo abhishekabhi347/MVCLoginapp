@@ -30,9 +30,9 @@ namespace Loginapplication.Migrations
 
             context.Roles.AddOrUpdate(
                 R=>R.RoleName,
-                new Role { RoleName = "Admin" },
-                new Role { RoleName = "Employee" },
-                new Role { RoleName = "User" }
+                new Role { RoleName = "Admin" ,Menu_display="1,2,3,4"},
+                new Role { RoleName = "Employee" , Menu_display = "1,2,3" },
+                new Role { RoleName = "User" , Menu_display = "2" }
                 );
 
             context.Countries.AddOrUpdate(

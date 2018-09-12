@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+
+<h4 class="text-center pt-2">Users</h4>
+<br />
+
+<table class="table table-bordered table-striped p-4">
+    <thead class="bg-dark text-light text-center">
+        <tr>
+            <td>
+                User ID
+            </td>
+            <td>
+                User Name
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.UserList != null)
+        {
+            foreach (var item in ViewBag.UserList)
+            {
+                <tr>
+                    <td>@item.Empid</td>
+                    <td>@item.EmpName</td>
+                </tr>
+            }
+        }
+
+    </tbody>
+
+</table>
+<br />
+

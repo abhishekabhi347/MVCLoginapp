@@ -19,6 +19,9 @@ namespace Loginapplication.Models
         [Display(Name = "Role Name")]
         public string RoleName { get; set; }
 
+        [ScaffoldColumn(false)]
+        public string Menu_display { get; set; }
+
         [StringLength(2)]
         [ScaffoldColumn(false)]
         public string Checkstatus { get; set; } = "Y";

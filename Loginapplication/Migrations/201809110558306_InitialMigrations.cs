@@ -28,6 +28,7 @@ namespace Loginapplication.Migrations
                         CountryId = c.Int(),
                         StateId = c.Int(),
                         Company = c.String(maxLength: 50),
+                        EmpDate = c.String(),
                         IsActive = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.EmployeeId);
@@ -63,6 +64,7 @@ namespace Loginapplication.Migrations
                     {
                         Roleid = c.Int(nullable: false, identity: true),
                         RoleName = c.String(nullable: false, maxLength: 50),
+                        Menu_display = c.String(),
                         Checkstatus = c.String(maxLength: 2),
                         User_Empid = c.Int(),
                     })
@@ -169,11 +171,12 @@ namespace Loginapplication.Migrations
                         CountryId = p.Int(),
                         StateId = p.Int(),
                         Company = p.String(maxLength: 50),
+                        EmpDate = p.String(),
                         IsActive = p.Boolean(),
                     },
                 body:
-                    @"INSERT [dbo].[Employee]([Name], [Description], [IsEmployeeRetired], [CountryId], [StateId], [Company], [IsActive])
-                      VALUES (@Name, @Description, @IsEmployeeRetired, @CountryId, @StateId, @Company, @IsActive)
+                    @"INSERT [dbo].[Employee]([Name], [Description], [IsEmployeeRetired], [CountryId], [StateId], [Company], [EmpDate], [IsActive])
+                      VALUES (@Name, @Description, @IsEmployeeRetired, @CountryId, @StateId, @Company, @EmpDate, @IsActive)
                       
                       DECLARE @EmployeeId int
                       SELECT @EmployeeId = [EmployeeId]
@@ -196,11 +199,12 @@ namespace Loginapplication.Migrations
                         CountryId = p.Int(),
                         StateId = p.Int(),
                         Company = p.String(maxLength: 50),
+                        EmpDate = p.String(),
                         IsActive = p.Boolean(),
                     },
                 body:
                     @"UPDATE [dbo].[Employee]
-                      SET [Name] = @Name, [Description] = @Description, [IsEmployeeRetired] = @IsEmployeeRetired, [CountryId] = @CountryId, [StateId] = @StateId, [Company] = @Company, [IsActive] = @IsActive
+                      SET [Name] = @Name, [Description] = @Description, [IsEmployeeRetired] = @IsEmployeeRetired, [CountryId] = @CountryId, [StateId] = @StateId, [Company] = @Company, [EmpDate] = @EmpDate, [IsActive] = @IsActive
                       WHERE ([EmployeeId] = @EmployeeId)"
             );
             
@@ -322,12 +326,13 @@ namespace Loginapplication.Migrations
                 p => new
                     {
                         RoleName = p.String(maxLength: 50),
+                        Menu_display = p.String(),
                         Checkstatus = p.String(maxLength: 2),
                         User_Empid = p.Int(),
                     },
                 body:
-                    @"INSERT [dbo].[Role]([RoleName], [Checkstatus], [User_Empid])
-                      VALUES (@RoleName, @Checkstatus, @User_Empid)
+                    @"INSERT [dbo].[Role]([RoleName], [Menu_display], [Checkstatus], [User_Empid])
+                      VALUES (@RoleName, @Menu_display, @Checkstatus, @User_Empid)
                       
                       DECLARE @Roleid int
                       SELECT @Roleid = [Roleid]
@@ -345,12 +350,13 @@ namespace Loginapplication.Migrations
                     {
                         Roleid = p.Int(),
                         RoleName = p.String(maxLength: 50),
+                        Menu_display = p.String(),
                         Checkstatus = p.String(maxLength: 2),
                         User_Empid = p.Int(),
                     },
                 body:
                     @"UPDATE [dbo].[Role]
-                      SET [RoleName] = @RoleName, [Checkstatus] = @Checkstatus, [User_Empid] = @User_Empid
+                      SET [RoleName] = @RoleName, [Menu_display] = @Menu_display, [Checkstatus] = @Checkstatus, [User_Empid] = @User_Empid
                       WHERE ([Roleid] = @Roleid)"
             );
             

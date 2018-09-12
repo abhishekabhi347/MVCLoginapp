@@ -15,13 +15,16 @@ using System.Text;
 using System.Threading.Tasks;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using NLog;
 
 namespace Loginapplication.Controllers
 {
-
+   
     [SessionState(SessionStateBehavior.Default)]
     public class HomeController : Controller
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -70,10 +73,10 @@ namespace Loginapplication.Controllers
 
                                 return RedirectToAction("About");
                             }
-                            ViewBag.Message = "Invalid User Name or Password";
+                            ViewBag.Message = "Invalid Password";
                             return View();
                         }
-                        ViewBag.Message = "Invalid User Name or Password";
+                        ViewBag.Message = "Invalid UserName and Password";
                         return View();
 
                     }
@@ -81,7 +84,8 @@ namespace Loginapplication.Controllers
 
                 catch (Exception e)
                 {
-                    ViewBag.Message = " Error!!! contact cms@info.in";
+                    logger.ErrorException("Error occured in Home controller Index Action", e);
+                    ViewBag.Message = "Invalid User Name and Password";
                     return View();
                 }
 
@@ -188,6 +192,7 @@ namespace Loginapplication.Controllers
                 }
                 catch (Exception e)
                 {
+                    logger.ErrorException("Error occured in registration", e);
                     ViewBag.Message = "Some exception occured" + e;
                     return View("Error");
                 }
@@ -458,16 +463,24 @@ namespace Loginapplication.Controllers
             {
                 using (EmpDbContext db = new EmpDbContext())
                 {
-
-                    var result = db.MenuManagement.ToList();
-
-                    return PartialView("_Header", result);
+                    var menurole = db.Roles.Find(Session["RoleID"]);  
+                    var menus = menurole.Menu_display;
+                    List<int> menuIds = menus.Split(',').Select(int.Parse).ToList(); 
+                    List<MenuManagement> data = new List<MenuManagement>();
+                    foreach (var item in menuIds)
+                    {
+                        data.Add(db.MenuManagement.Find(item));
+                        
+                    }
+                                       
+                    return PartialView("_Header", data);
 
                 }
 
             }
             catch (Exception ex)
             {
+                logger.ErrorException("Error occured in Home controller Index Action", ex);
                 var error = ex.Message.ToString();
                 return Content("Error");
             }

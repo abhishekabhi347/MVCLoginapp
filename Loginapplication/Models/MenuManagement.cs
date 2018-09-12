@@ -33,5 +33,6 @@ namespace Loginapplication.Models
         [ScaffoldColumn(false)]
         public string Checkstatus { get; set; } = "Y";
 
+
     }
 }

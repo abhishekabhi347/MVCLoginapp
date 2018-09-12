@@ -1,4 +1,7 @@
-﻿using Loginapplication.Models;
+﻿using LoginappBLL;
+using LoginappBLL.Interface;
+using LoginappDomain;
+using Loginapplication.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -87,12 +90,13 @@ namespace Loginapplication.Controllers
                 Byte[] image = binaryReader.ReadBytes((int)stream.Length);
                 //imagebyte = reader.ReadBytes(file.ContentLength);
 
-                FileUpload fimg = new FileUpload();
-
-                fimg.FileName = filename;
-                fimg.Imagelength = image;
-                fimg.ImagePath = "/Assets/" + filename;
-                fimg.Checkstatus = "Y";
+                FileUpload fimg = new FileUpload
+                {
+                    FileName = filename,
+                    Imagelength = image,
+                    ImagePath = "/Assets/" + filename,
+                    Checkstatus = "Y"
+                };
                 db.FileUploads.Add(fimg);
                 db.SaveChanges();
 
@@ -117,44 +121,27 @@ namespace Loginapplication.Controllers
         }
 
 
+        public ActionResult Users()
+        {
+            if (Session["EmpName"] != null)
+            {
+                ViewBag.UsersName = new UsersBusiness().GetUserName(234);
+
+                List<UsersDomainModel> listDomain = new UsersBusiness().GetAllUsers();
+
+
+                ViewBag.UserList = listDomain;
+
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
 
 
 
 
-
-
-
-
-        //[HttpPost]
-        //public ActionResult Create(FileUpload img, HttpPostedFileBase file)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (file != null)
-        //        {
-        //            string filename = Path.GetFileName(file.FileName);
-        //            string path = HttpContext.Server.MapPath("/Assets/") + filename;
-
-        //             file.SaveAs(path);
-
-        //            img.ImagePath = file.FileName;
-
-        //            Stream stream = file.InputStream;
-        //            BinaryReader binaryReader = new BinaryReader(stream);
-        //            Byte[] image = binaryReader.ReadBytes((int)stream.Length);
-
-        //            img.Imagelength = image;
-        //        }
-        //        using (EmpDbContext db = new EmpDbContext())
-        //        {
-        //            db.FileUploads.Add(img);
-        //            db.SaveChanges();
-        //        }
-        //        return View();
-        //    }
-        //    return View();
-        //}
+       
 
     }
 }
