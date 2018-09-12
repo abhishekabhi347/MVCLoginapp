@@ -42,7 +42,8 @@ namespace Loginapplication.Models
 
 
         [Display(Name ="Choose Role")]
-        public int? Roleid { get; set; }
+        [Required(ErrorMessage ="Please Choose role")]
+        public int Roleid { get; set; }
 
         public string Vcode { get; set; }
 

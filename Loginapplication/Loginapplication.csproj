@@ -183,9 +183,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201809110558306_InitialMigrations.cs" />
-    <Compile Include="Migrations\201809110558306_InitialMigrations.Designer.cs">
-      <DependentUpon>201809110558306_InitialMigrations.cs</DependentUpon>
+    <Compile Include="Migrations\201809121348506_Initial-Migrations.cs" />
+    <Compile Include="Migrations\201809121348506_Initial-Migrations.Designer.cs">
+      <DependentUpon>201809121348506_Initial-Migrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Countries.cs" />
@@ -431,8 +431,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201809110558306_InitialMigrations.resx">
-      <DependentUpon>201809110558306_InitialMigrations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201809121348506_Initial-Migrations.resx">
+      <DependentUpon>201809121348506_Initial-Migrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

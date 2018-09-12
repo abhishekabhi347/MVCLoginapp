@@ -106,7 +106,7 @@ namespace Loginapplication.Migrations
                         Email = c.String(maxLength: 200),
                         UserName = c.String(nullable: false, maxLength: 100, unicode: false),
                         PhoneNo = c.String(maxLength: 15),
-                        Roleid = c.Int(),
+                        Roleid = c.Int(nullable: false),
                         Vcode = c.String(),
                         Checkstatus = c.String(maxLength: 2, fixedLength: true, unicode: false),
                         Roledetails_Roleid = c.Int(),

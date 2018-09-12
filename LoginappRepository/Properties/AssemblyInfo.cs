@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LoginappDAL")]
+[assembly: AssemblyTitle("LoginappRepository")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LoginappDAL")]
+[assembly: AssemblyProduct("LoginappRepository")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5bb45d7f-1aa4-46e5-b96d-f6e82d5e2dd4")]
+[assembly: Guid("38c58db1-cc66-4e49-9572-4c04852193f3")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -30,7 +30,7 @@ namespace Loginapplication.Migrations
 
             context.Roles.AddOrUpdate(
                 R=>R.RoleName,
-                new Role { RoleName = "Admin" ,Menu_display="1,2,3,4"},
+                new Role { RoleName = "Admin" ,Menu_display="1,2,3,4,5"},
                 new Role { RoleName = "Employee" , Menu_display = "1,2,3" },
                 new Role { RoleName = "User" , Menu_display = "2" }
                 );
@@ -59,7 +59,7 @@ namespace Loginapplication.Migrations
             context.MenuManagement.AddOrUpdate(
 
                 M => M.Menu_NAME,
-                new MenuManagement { Menu_ID = 1, Menu_Parent_ID = 0, Menu_NAME = "Home", CONTROLLER_NAME = "Home", ACTION_NAME = "About" },
+                new MenuManagement { Menu_ID = 1, Menu_Parent_ID = 0, Menu_NAME = "About", CONTROLLER_NAME = "Home", ACTION_NAME = "About" },
                 new MenuManagement { Menu_ID = 2, Menu_Parent_ID = 0, Menu_NAME = "Contact", CONTROLLER_NAME = "Home", ACTION_NAME = "Contact" },
                 new MenuManagement { Menu_ID = 3, Menu_Parent_ID = 0, Menu_NAME = "Technologies", CONTROLLER_NAME = "Technology", ACTION_NAME = "Index" },
                 new MenuManagement { Menu_ID = 4, Menu_Parent_ID = 0, Menu_NAME = "Utilities", CONTROLLER_NAME = "", ACTION_NAME = "" },

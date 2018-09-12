@@ -13,6 +13,15 @@ namespace Loginapplication.Controllers
 {
     public class UtilityController : Controller
     {
+
+        IUsersBusiness _usersBusiness;
+
+        public UtilityController(IUsersBusiness usersBusiness)
+        {
+            _usersBusiness = usersBusiness;
+        }
+
+
         // GET: Utility
         [NonAction]
         public ActionResult Index()
