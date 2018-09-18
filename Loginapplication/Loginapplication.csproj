@@ -404,6 +404,9 @@
     <Content Include="Views\Utility\Create.cshtml" />
     <Content Include="Views\Shared\_StateOptionPartial.cshtml" />
     <Content Include="Views\Utility\Users.cshtml" />
+    <Content Include="Views\Utility\Roles.cshtml" />
+    <Content Include="Views\Utility\_AddEditRole.cshtml" />
+    <Content Include="Views\Utility\MenuManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

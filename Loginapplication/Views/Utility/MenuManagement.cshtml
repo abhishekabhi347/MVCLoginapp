@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Loginapplication.Models.MenuManagement>
+
+@{
+    ViewBag.Title = "MenuManagement";
+    var value= false;
+    var subvalue= false;
+}
+
+<div class="container col-md-6">
+    <h4 class="text-center text-primary pt-2">Menu Management</h4>
+
+    @using (Html.BeginForm("MenuManagement", "Utility", FormMethod.Post))
+    {
+
+        <input type="hidden" name="hdnroleid" id="hdnroleid" value="@ViewBag.roleid" />
+
+        if (ViewBag.menulist != null)
+        {
+            <h6 class="text-center text-info">Role Name: @ViewBag.roleName</h6>
+
+
+            foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0).Distinct().OrderBy(x => x.Menu_ID).ToList())
+            {
+                if (ViewBag.rolemenu != null)
+                {
+                    foreach (var x in ViewBag.rolemenu)
+                    {
+                        if (x == item.Menu_ID)
+                        {
+                            value = true;
+                            break;
+                        }
+                        else
+                        {
+                            value = false;
+                        }
+                    }
+
+                    if (item.ACTION_NAME != "")
+                    {
+                        <div class="row alert alert-dark text-center">
+                            <div class="col-md-12">
+                                @Html.CheckBox(@item.Menu_NAME, @value, new { @value = item.Menu_ID })
+                                <label for="@item.Menu_NAME">@item.Menu_NAME</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row alert alert-dark text-center">
+                            <div class="col-md-12">
+                                @Html.CheckBox(@item.Menu_NAME, @value, new { @value = item.Menu_ID })
+                                <label for="@item.Menu_NAME">@item.Menu_NAME</label>
+                            </div>
+                        </div>
+
+                        foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
+                        {
+                            foreach (var x in ViewBag.rolemenu)
+                            {
+                                if (x == firstItem.Menu_ID)
+                                {
+                                    subvalue = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    subvalue = false;
+                                }
+                            }
+                            <div class="text-center">
+                                @Html.CheckBox(@firstItem.Menu_NAME, @subvalue, new { @value = firstItem.Menu_ID })
+                                <label for="@firstItem.Menu_NAME">@firstItem.Menu_NAME</label>
+                            </div>
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (item.ACTION_NAME != "")
+                    {
+                        <div class="row alert alert-dark text-center">
+                            <div class="col-md-12">
+                                @Html.CheckBox(@item.Menu_NAME, new { @value = item.Menu_ID })
+                                <label for="@item.Menu_NAME">@item.Menu_NAME</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row alert alert-dark text-center">
+                            <div class="col-md-12">
+                                @Html.CheckBox(@item.Menu_NAME, new { @value = item.Menu_ID })
+                                <label for="@item.Menu_NAME">@item.Menu_NAME</label>
+                            </div>
+                        </div>
+                        foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
+                        {
+
+                            <div class="text-center">
+                                @Html.CheckBox(@firstItem.Menu_NAME, new { @value = firstItem.Menu_ID })
+                                <label for="@firstItem.Menu_NAME">@firstItem.Menu_NAME</label>
+                            </div>
+                        }
+
+                    }
+
+                }
+            }
+        }
+        <br />
+        <br />
+        <div class="text-center">
+            <button type="submit" name="btnSubmit" class="btn btn-primary btn-md">Submit</button>
+            <button type="button" name="btnCancel" class="btn btn-primary btn-md" onclick="location.href='/Utility/Roles'">Cancel</button>
+        </div>
+        <br />
+    }
+</div>

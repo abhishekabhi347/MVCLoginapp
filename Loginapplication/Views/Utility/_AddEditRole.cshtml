@@ -1,0 +1,70 @@
+﻿@model Loginapplication.Models.Role
+
+<div>
+    @using (Html.BeginForm("Roles", "Utility", FormMethod.Post, new { id = "myForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*<form id="myForm">*@
+        @Html.HiddenFor(m => m.Roleid)
+
+        <div class="col-md-6">
+            <div class="md-form">
+                @Html.LabelFor(model => model.RoleName, htmlAttributes: new { @class = "control-label" })
+
+                @Html.TextBoxFor(model => model.RoleName, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+       <br />
+
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-success" value="Submit" id="btnSubmit" />
+
+
+            <input type="button" class="btn btn-danger" value="Cancel" id="btnCancel" data-dismiss="modal" />
+        </div>
+
+        @*</form>*@
+    }
+    <div style="text-align:center;display:none" id="loaderDiv">
+        <img src="~/Assets/Rolling-1s-100px.gif" width="150" />
+    </div>
+</div>
+@Scripts.Render("~/bundles/jqueryval")
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $("#btnSubmit").click(function () {
+
+
+            $("#loaderDiv").show();
+
+            var myformdata = $("#myForm").serialize();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Utility/AddEditRole",
+                data: myformdata,
+                success: function () {
+                    $("#loaderDiv").hide();
+                    $("#myModal").modal("hide");
+                    window.location.href = "/Utility/Roles";
+
+                },
+                error: function () {
+                    $("#loaderDiv").hide();
+                }
+
+            });
+        });
+
+    });
+
+
+</script>

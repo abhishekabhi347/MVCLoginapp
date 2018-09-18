@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,12 +15,12 @@ namespace Loginapplication.Controllers
     public class UtilityController : Controller
     {
 
-        IUsersBusiness _usersBusiness;
+        //IUsersBusiness _usersBusiness;
 
-        public UtilityController(IUsersBusiness usersBusiness)
-        {
-            _usersBusiness = usersBusiness;
-        }
+        //public UtilityController(IUsersBusiness usersBusiness)
+        //{
+        //    _usersBusiness = usersBusiness;
+        //}
 
 
         // GET: Utility
@@ -56,7 +57,7 @@ namespace Loginapplication.Controllers
             }
         }
 
-        
+
 
         public ActionResult Create(int id)
         {
@@ -147,10 +148,178 @@ namespace Loginapplication.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Roles()
+        {
+            if (Session["EmpName"] != null)
+            {
+                var db = new EmpDbContext();
+                ViewBag.Roles = db.Roles.Where(x => x.Checkstatus == "Y").ToList();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult AddEditRole(int RoleID)
+        {
+            Role model = new Role();
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                if (RoleID > 0)
+                {
+                    var rolelist = db.Roles.SingleOrDefault(x => x.Roleid == RoleID);
+                    model.Roleid = rolelist.Roleid;
+                    model.RoleName = rolelist.RoleName;
+                }
+            }
+            return PartialView("_AddEditRole", model);
+
+        }
+
+        [HttpPost]
+        public ActionResult AddEditRole(Role role)
+        {
+            if (Session["EmpName"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+
+                    try
+                    {
+
+                        using (EmpDbContext db = new EmpDbContext())
+                        {
+                            if (role.Roleid > 0)
+                            {
+                                //update
+                                Role rolelist = db.Roles.SingleOrDefault(x => x.Roleid == role.Roleid);
+                                rolelist.RoleName = role.RoleName;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                //Insert
+
+                                role.Checkstatus = "Y";
+                                db.Roles.Add(role);
+                                db.SaveChanges();
+                            }
+                        }
+                        ModelState.Clear();
+                        return RedirectToAction("Roles", "Utility");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        //return View("Error", new HandleErrorInfo(ex, "Utility", "Roles"));
+                    }
+
+                }
+                return RedirectToAction("AddEditRole", role.Roleid);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult DeleteRole(int RoleID)
+        {
+            Role model = new Role();
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                Role rolelist = db.Roles.SingleOrDefault(x => x.Roleid == RoleID);
+                rolelist.Checkstatus = "N";
+                db.SaveChanges();
+            }
+            return RedirectToAction("Roles", "Utility");
+        }
+
+        public ActionResult MenuManagement(int RoleID)
+        {
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext db = new EmpDbContext())
+                {
+                    var menurole = db.Roles.Find(RoleID);
+                    var menus = menurole.Menu_display;
+                    List<MenuManagement> data = new List<MenuManagement>();
+                    if (menus != null)
+                    {
+                        List<int> menuIds = menus.Split(',').Select(int.Parse).ToList();
 
 
+                        ViewBag.rolemenu = menuIds;
 
-       
+                    }
+                    ViewBag.roleid = RoleID;
+                    ViewBag.roleName = menurole.RoleName;
+                    ViewBag.menulist = db.MenuManagement.Select(p => p.Menu_NAME).ToList();
+                    data = db.MenuManagement.ToList();
 
+                    //foreach (var item in menuIds)
+                    //{
+                    //    data.Add(db.MenuManagement.Find(item));
+
+
+                    //}
+                    return View(data);
+
+                }
+                //return RedirectToAction("Roles");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult MenuManagement(FormCollection collection)
+        {
+            if (Session["EmpName"] != null)
+            {
+
+                using (EmpDbContext db = new EmpDbContext())
+                {
+
+                    var menulist = db.MenuManagement.Select(p => p.Menu_NAME).ToList();
+                    List<int> applist = new List<int>();
+                    StringBuilder sb = new StringBuilder();
+                    // sb.Append("0");
+                    foreach (var item in menulist)
+                    {
+
+                        if (!string.IsNullOrEmpty(collection[item]))
+                        {
+                            var checkResp = collection[item].Split(',')[0];
+
+                            if (checkResp != "false")
+                            {
+                                //sb.Append(", " + int.Parse(checkResp));
+                                sb.Append(int.Parse(checkResp) + " ,");
+                            }
+                        }
+                    }
+                    var rid = int.Parse(collection["hdnroleid"]);
+                    var menures = sb.ToString();
+                    var result = (from s in db.Roles where s.Roleid == rid select s).FirstOrDefault();
+                    result.Menu_display = menures.Remove(menures.Length - 1);
+                    db.SaveChanges();
+
+                }
+
+                return RedirectToAction("Roles");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
     }
 }

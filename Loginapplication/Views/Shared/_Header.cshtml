@@ -59,20 +59,24 @@
                                             @firstItem.Menu_NAME
                                         </a>
                                         @*<ul>
-                                                @foreach (var secondItem in (Model.Where(s => s.Menu_Parent_ID == firstItem.Menu_ID).ToList()))
-                                                {
-                                                    <li>
-                                                        <a href="/@secondItem.CONTROLLER_NAME/@secondItem.ACTION_NAME" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
-                                                            @secondItem.Menu_NAME
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>*@
+                                        @foreach (var secondItem in (Model.Where(s => s.Menu_Parent_ID == firstItem.Menu_ID).ToList()))
+                                        {
+                                            <li>
+                                                <a href="/@secondItem.CONTROLLER_NAME/@secondItem.ACTION_NAME" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
+                                                    @secondItem.Menu_NAME
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>*@
                                     }
                                 }
                                 <a href="/Utility/Users" class="dropdown-item">
                                     Users
                                 </a>
+                                <a href="/Utility/Roles" class="dropdown-item">
+                                    Roles
+                                </a>
+
 
                             </div>
                            
