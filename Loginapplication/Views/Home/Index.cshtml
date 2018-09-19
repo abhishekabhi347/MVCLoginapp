@@ -71,8 +71,8 @@
                             <br />
                             <div class="md-form">
 
-                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label " })
-                                @Html.TextBoxFor(model => model.UserName, new  { @class = "form-control" })
+                                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @for= "iduname" })
+                                @Html.TextBoxFor(model => model.UserName, new  { @class = "form-control", @id="iduname" })
 
                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
 

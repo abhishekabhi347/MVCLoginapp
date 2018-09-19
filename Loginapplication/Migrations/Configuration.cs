@@ -2,19 +2,18 @@ namespace Loginapplication.Migrations
 {
     using Loginapplication.Models;
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Loginapplication.Models.EmpDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<EmpDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Loginapplication.Models.EmpDbContext context)
+        protected override void Seed(EmpDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -29,20 +28,20 @@ namespace Loginapplication.Migrations
                 );
 
             context.Roles.AddOrUpdate(
-                R=>R.RoleName,
-                new Role { RoleName = "Admin" ,Menu_display="1,2,3,4,5"},
-                new Role { RoleName = "Employee" , Menu_display = "1,2,3" },
-                new Role { RoleName = "User" , Menu_display = "2" }
+                R => R.RoleName,
+                new Role { RoleName = "Admin", Menu_display = "1,2,3,4,5,6,8" },
+                new Role { RoleName = "Employee", Menu_display = "1,2,3" },
+                new Role { RoleName = "User", Menu_display = "2" }
                 );
 
             context.Countries.AddOrUpdate(
-                C=>C.CountryName,
+                C => C.CountryName,
                 new Country { CountryName = "India" },
                 new Country { CountryName = "United States" }
                 );
 
             context.States.AddOrUpdate(
-                S=>S.StateName,
+                S => S.StateName,
                 new States { StateName = "Delhi", CountryId = 2 },
                 new States { StateName = "Punjab", CountryId = 2 },
                 new States { StateName = "Andhra Pradesh", CountryId = 2 },
@@ -63,9 +62,17 @@ namespace Loginapplication.Migrations
                 new MenuManagement { Menu_ID = 2, Menu_Parent_ID = 0, Menu_NAME = "Contact", CONTROLLER_NAME = "Home", ACTION_NAME = "Contact" },
                 new MenuManagement { Menu_ID = 3, Menu_Parent_ID = 0, Menu_NAME = "Technologies", CONTROLLER_NAME = "Technology", ACTION_NAME = "Index" },
                 new MenuManagement { Menu_ID = 4, Menu_Parent_ID = 0, Menu_NAME = "Utilities", CONTROLLER_NAME = "", ACTION_NAME = "" },
-                new MenuManagement { Menu_ID = 5, Menu_Parent_ID = 4, Menu_NAME = "File Upload", CONTROLLER_NAME = "Utility", ACTION_NAME = "Create" }
+                new MenuManagement { Menu_ID = 5, Menu_Parent_ID = 4, Menu_NAME = "File Upload", CONTROLLER_NAME = "Utility", ACTION_NAME = "Create" },
+                new MenuManagement { Menu_ID = 6, Menu_Parent_ID = 4, Menu_NAME = "Role Management", CONTROLLER_NAME = "Utility", ACTION_NAME = "Roles" },
+                new MenuManagement { Menu_ID = 7, Menu_Parent_ID = 4, Menu_NAME = "Users", CONTROLLER_NAME = "Utility", ACTION_NAME = "Users", Checkstatus = "N" },
+                new MenuManagement { Menu_ID = 8, Menu_Parent_ID = 4, Menu_NAME = "Site Settings", CONTROLLER_NAME = "Utility", ACTION_NAME = "SiteSetting" }
                 );
 
+            context.siteSettings.AddOrUpdate(
+                M => M.SettingName,
+                new SiteSettings { SettingName = "Default", ApplicationTitle = "Sample Application", ApplicationTitleColour = "FFFFFF", ApplicationTitleFont = "Arial Verdana", ApplicationTitleSize = "20", MenuColour = "0BA5FF", MenuTextColour = "FFFFFF", NavColour = "1DA4FF", NavTextColour = "FFFFFF",IsActive= true }
+
+                );
 
 
             context.SaveChanges();

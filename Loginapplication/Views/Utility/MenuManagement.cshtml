@@ -19,7 +19,7 @@
             <h6 class="text-center text-info">Role Name: @ViewBag.roleName</h6>
 
 
-            foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0).Distinct().OrderBy(x => x.Menu_ID).ToList())
+            foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0 && s.Checkstatus == "Y").Distinct().OrderBy(x => x.Menu_ID).ToList())
             {
                 if (ViewBag.rolemenu != null)
                 {
@@ -53,26 +53,27 @@
                                 <label for="@item.Menu_NAME">@item.Menu_NAME</label>
                             </div>
                         </div>
-
-                        foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
-                        {
-                            foreach (var x in ViewBag.rolemenu)
+                        <div class="row">
+                            @foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID && s.Checkstatus == "Y").ToList()))
                             {
-                                if (x == firstItem.Menu_ID)
+                                foreach (var x in ViewBag.rolemenu)
                                 {
-                                    subvalue = true;
-                                    break;
+                                    if (x == firstItem.Menu_ID)
+                                    {
+                                        subvalue = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        subvalue = false;
+                                    }
                                 }
-                                else
-                                {
-                                    subvalue = false;
-                                }
+                                <div class="col text-center">
+                                    @Html.CheckBox(@firstItem.Menu_NAME, @subvalue, new { @value = firstItem.Menu_ID })
+                                    <label for="@firstItem.Menu_NAME">@firstItem.Menu_NAME</label>
+                                </div>
                             }
-                            <div class="text-center">
-                                @Html.CheckBox(@firstItem.Menu_NAME, @subvalue, new { @value = firstItem.Menu_ID })
-                                <label for="@firstItem.Menu_NAME">@firstItem.Menu_NAME</label>
-                            </div>
-                        }
+                        </div>
 
                     }
                 }
@@ -95,15 +96,17 @@
                                 <label for="@item.Menu_NAME">@item.Menu_NAME</label>
                             </div>
                         </div>
-                        foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
-                        {
+                        <div class="row">
+                            @foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID && s.Checkstatus == "Y").ToList()))
+                            {
 
-                            <div class="text-center">
+                            <div class="col text-center">
                                 @Html.CheckBox(@firstItem.Menu_NAME, new { @value = firstItem.Menu_ID })
                                 <label for="@firstItem.Menu_NAME">@firstItem.Menu_NAME</label>
                             </div>
-                        }
+                            }
 
+                        </div>
                     }
 
                 }

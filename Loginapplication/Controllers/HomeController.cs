@@ -472,7 +472,18 @@ namespace Loginapplication.Controllers
                         data.Add(db.MenuManagement.Find(item));
                         
                     }
-                                       
+                    SiteSettings Inactivate = db.siteSettings.Where(x => x.IsActive == true).FirstOrDefault();
+                    ViewBag.Applicationtitle = (Inactivate.ApplicationTitle).ToString();
+                    ViewBag.Applicationtitlecolour = (Inactivate.ApplicationTitleColour).ToString();
+                    ViewBag.Applicationtitlefont = (Inactivate.ApplicationTitleFont).ToString();
+                    ViewBag.Applicationtitlesize = (Inactivate.ApplicationTitleSize).ToString();
+                    ViewBag.MenuColour = (Inactivate.MenuColour).ToString();
+                    ViewBag.Menutxtcolour = (Inactivate.MenuTextColour).ToString();
+                    ViewBag.Navcolour = (Inactivate.NavColour).ToString();
+                    ViewBag.Navtextcolour = (Inactivate.NavTextColour).ToString();
+                    
+
+
                     return PartialView("_Header", data);
 
                 }

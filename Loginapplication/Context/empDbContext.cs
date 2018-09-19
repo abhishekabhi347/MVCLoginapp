@@ -32,6 +32,8 @@ namespace Loginapplication.Models
 
         public virtual DbSet<MenuManagement> MenuManagement { get; set; }
 
+        public DbSet<SiteSettings> siteSettings { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -2,6 +2,7 @@
 using LoginappBLL.Interface;
 using LoginappDomain;
 using Loginapplication.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace Loginapplication.Controllers
 {
     public class UtilityController : Controller
     {
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         //IUsersBusiness _usersBusiness;
 
@@ -259,7 +261,7 @@ namespace Loginapplication.Controllers
                     }
                     ViewBag.roleid = RoleID;
                     ViewBag.roleName = menurole.RoleName;
-                    ViewBag.menulist = db.MenuManagement.Select(p => p.Menu_NAME).ToList();
+                    ViewBag.menulist = db.MenuManagement.Where(x => x.Checkstatus == "Y").Select(p => p.Menu_NAME).ToList();
                     data = db.MenuManagement.ToList();
 
                     //foreach (var item in menuIds)
@@ -288,7 +290,7 @@ namespace Loginapplication.Controllers
                 using (EmpDbContext db = new EmpDbContext())
                 {
 
-                    var menulist = db.MenuManagement.Select(p => p.Menu_NAME).ToList();
+                    var menulist = db.MenuManagement.Where(x => x.Checkstatus == "Y").Select(p => p.Menu_NAME).ToList();
                     List<int> applist = new List<int>();
                     StringBuilder sb = new StringBuilder();
                     // sb.Append("0");
@@ -321,5 +323,120 @@ namespace Loginapplication.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+
+        public ActionResult SiteSetting()
+        {
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext db = new EmpDbContext())
+                {
+                    ViewBag.SettingsList = db.siteSettings.Where(x => x.Checkstatus == "Y").ToList();
+                    ViewBag.ListCount = (from row in db.siteSettings
+                                         where row.Checkstatus == "Y"
+                                         select row).Count();
+
+                    return View();
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+        public ActionResult AddEditSettings(int SiteID)
+        {
+            if (Session["EmpName"] != null)
+            {
+                using (EmpDbContext db = new EmpDbContext())
+                {
+                    var data = db.siteSettings.Find(SiteID);
+                    return View(data);
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddEditSettings(SiteSettings model)
+        {
+
+            try
+            {
+                using (EmpDbContext db = new EmpDbContext())
+                {
+                    //update
+                    if (model.SettingsID > 0)
+                    {
+                        if (ModelState.IsValid)
+                        {
+                            SiteSettings settingslist = db.siteSettings.SingleOrDefault(x => x.SettingsID == model.SettingsID);
+                            settingslist.SettingName = model.SettingName;
+                            settingslist.ApplicationTitle = model.ApplicationTitle;
+                            settingslist.ApplicationTitleColour = model.ApplicationTitleColour;
+                            settingslist.ApplicationTitleFont = model.ApplicationTitleFont;
+                            settingslist.ApplicationTitleSize = model.ApplicationTitleSize;
+                            settingslist.MenuColour = model.MenuColour;
+                            settingslist.MenuTextColour = model.MenuTextColour;
+                            settingslist.NavColour = model.NavColour;
+                            settingslist.NavTextColour = model.NavTextColour;
+
+                            db.SaveChanges();
+                            ModelState.Clear();
+                        }
+                        else
+                        {
+                            return View();
+                        }
+                    }
+                    //Insert
+                    else
+                    {
+                        model.Checkstatus = "Y";
+                        db.siteSettings.Add(model);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("SiteSetting");
+            }
+            catch (Exception e)
+            {
+                logger.ErrorException("Error occured in Home controller Index Action", e);
+                return RedirectToAction("SiteSetting");
+            }
+        }
+
+        public ActionResult DeleteSiteSettings(int SiteID)
+        {
+           // SiteSettings model = new SiteSettings();
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                SiteSettings sitelist = db.siteSettings.SingleOrDefault(x => x.SettingsID == SiteID);
+                sitelist.Checkstatus = "N";
+                db.SaveChanges();
+            }
+            return RedirectToAction("SiteSetting", "Utility");
+        }
+
+        public void ActivateSiteSetting(int SiteID)
+        {
+            using (EmpDbContext db = new EmpDbContext())
+            {
+                SiteSettings Inactivate = db.siteSettings.Where(x => x.IsActive == true).FirstOrDefault();
+                if(Inactivate != null) Inactivate.IsActive = false;
+
+                SiteSettings sitelist = db.siteSettings.SingleOrDefault(x => x.SettingsID == SiteID);
+                sitelist.IsActive = true;
+                db.SaveChanges();
+            }
+        }
+
     }
 }

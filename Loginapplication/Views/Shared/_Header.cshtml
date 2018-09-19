@@ -1,47 +1,91 @@
 ﻿@model IEnumerable<Loginapplication.Models.MenuManagement>
 
+@{ 
+    var title = "";
+    var fontfamily = "";
+    var fontsize = "";
+    var fontcolour = "";
+    var menucolour = "";
+    var menutxtcolour = "";
+    var navcolour = "";
+    var navtxtcolour = "";
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-auto">
+    if (ViewBag.Applicationtitle != null)
+    {
+        title = @ViewBag.Applicationtitle;
+    }
+    if (ViewBag.Applicationtitlecolour != null)
+    {
+        fontcolour = @ViewBag.Applicationtitlecolour;
+    }
+    if (ViewBag.Applicationtitlefont != null)
+    {
+        fontfamily = @ViewBag.Applicationtitlefont;
+    }
+    if (ViewBag.Applicationtitlesize != null)
+    {
+        fontsize = @ViewBag.Applicationtitlesize;
+    }
+    if (ViewBag.MenuColour != null)
+    {
+        menucolour = @ViewBag.MenuColour;
+    }
+    if (ViewBag.Menutxtcolour != null)
+    {
+        menutxtcolour = @ViewBag.Menutxtcolour;
+    }
+    if (ViewBag.Navcolour != null)
+    {
+        navcolour = @ViewBag.Navcolour;
+    }
+    if (ViewBag.Navtextcolour != null)
+    {
+        navtxtcolour = @ViewBag.Navtextcolour;
+    }
+
+
+}
+<nav class="navbar navbar-expand-lg navbar-dark  fixed-top mb-auto" style="background-color: #@navcolour;">
     <div style="margin-right:15px" class="d-none d-sm-block">
         <img src="~/Assets/ISSIlogo.png" alt="logo" class="img-responsive" height="40" width="60" />
     </div>
-    <a class="navbar-brand font-bold" href="#">Sample Application</a>
+    <a class="navbar-brand font-bold" href="#" style="font-family: @fontfamily ;font-size:@(fontsize)px;color:#@fontcolour;">
+       @title
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3" aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-3">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-3" >
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle  mdl-js-ripple-effect mdl-button mdl-js-button" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle  mdl-js-ripple-effect mdl-button mdl-js-button" style="color: #@navtxtcolour;" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user"></i> @Session["EmpName"]
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-3">
-                    @*<a class="dropdown-item" href="#">My account</a>*@
                     <a class="dropdown-item " href="#"><b>Role:</b> @Session["Role"]</a>
                     <a class="dropdown-item " href="/Home/LogOut">
                         <i class="fa fa-suitcase"></i> <b>LogOut</b>
                     </a>
-                    @*<a class="dropdown-item" href="#">Log out</a>*@
                 </div>
             </li>
         </ul>
     </div>
 </nav>
 
-<nav class="mb-4 navbar navbar-expand-lg bg-primary navbar-dark ">
+<nav class="mb-4 navbar navbar-expand-lg  navbar-dark " style="background-color: #@menucolour;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav">
-            @{foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0).Distinct().OrderBy(x => x.Menu_ID).ToList())
+            @{foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0 && s.Checkstatus == "Y").Distinct().OrderBy(x => x.Menu_ID).ToList())
                 {
                     if (item.ACTION_NAME != "")
                     {
                         <li class="nav-item">
-                            <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
+                            <a href="/@item.CONTROLLER_NAME/@item.ACTION_NAME" style="color: #@menutxtcolour;" class="nav-link mdl-js-ripple-effect mdl-button mdl-js-button">
                                 @item.Menu_NAME
                             </a>
                         </li>
@@ -49,11 +93,11 @@
                     else
                     {
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle mdl-js-ripple-effect mdl-button mdl-js-button" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="nav-link dropdown-toggle mdl-js-ripple-effect mdl-button mdl-js-button" style="color: #@menutxtcolour;" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @item.Menu_NAME
                             </a>
                             <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                @{foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID).ToList()))
+                                @{foreach (var firstItem in (Model.Where(s => s.Menu_Parent_ID == item.Menu_ID && s.Checkstatus == "Y").ToList()))
                                     {
                                         <a href="/@firstItem.CONTROLLER_NAME/@firstItem.ACTION_NAME" class="dropdown-item">
                                             @firstItem.Menu_NAME
@@ -70,13 +114,7 @@
                                     </ul>*@
                                     }
                                 }
-                                <a href="/Utility/Users" class="dropdown-item">
-                                    Users
-                                </a>
-                                <a href="/Utility/Roles" class="dropdown-item">
-                                    Roles
-                                </a>
-
+                           
 
                             </div>
                            

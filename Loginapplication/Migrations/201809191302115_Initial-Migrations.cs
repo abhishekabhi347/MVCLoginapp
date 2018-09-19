@@ -73,6 +73,25 @@ namespace Loginapplication.Migrations
                 .Index(t => t.User_Empid);
             
             CreateTable(
+                "dbo.SiteSettings",
+                c => new
+                    {
+                        SettingsID = c.Int(nullable: false, identity: true),
+                        SettingName = c.String(nullable: false, maxLength: 20),
+                        ApplicationTitle = c.String(nullable: false, maxLength: 50),
+                        ApplicationTitleColour = c.String(maxLength: 100),
+                        ApplicationTitleSize = c.String(nullable: false, maxLength: 50),
+                        ApplicationTitleFont = c.String(nullable: false, maxLength: 50),
+                        NavColour = c.String(nullable: false, maxLength: 50),
+                        NavTextColour = c.String(nullable: false, maxLength: 50),
+                        MenuColour = c.String(nullable: false, maxLength: 50),
+                        MenuTextColour = c.String(nullable: false, maxLength: 50),
+                        IsActive = c.Boolean(nullable: false),
+                        Checkstatus = c.String(maxLength: 1),
+                    })
+                .PrimaryKey(t => t.SettingsID);
+            
+            CreateTable(
                 "dbo.States",
                 c => new
                     {
@@ -373,6 +392,70 @@ namespace Loginapplication.Migrations
             );
             
             CreateStoredProcedure(
+                "dbo.SiteSettings_Insert",
+                p => new
+                    {
+                        SettingName = p.String(maxLength: 20),
+                        ApplicationTitle = p.String(maxLength: 50),
+                        ApplicationTitleColour = p.String(maxLength: 100),
+                        ApplicationTitleSize = p.String(maxLength: 50),
+                        ApplicationTitleFont = p.String(maxLength: 50),
+                        NavColour = p.String(maxLength: 50),
+                        NavTextColour = p.String(maxLength: 50),
+                        MenuColour = p.String(maxLength: 50),
+                        MenuTextColour = p.String(maxLength: 50),
+                        IsActive = p.Boolean(),
+                        Checkstatus = p.String(maxLength: 1),
+                    },
+                body:
+                    @"INSERT [dbo].[SiteSettings]([SettingName], [ApplicationTitle], [ApplicationTitleColour], [ApplicationTitleSize], [ApplicationTitleFont], [NavColour], [NavTextColour], [MenuColour], [MenuTextColour], [IsActive], [Checkstatus])
+                      VALUES (@SettingName, @ApplicationTitle, @ApplicationTitleColour, @ApplicationTitleSize, @ApplicationTitleFont, @NavColour, @NavTextColour, @MenuColour, @MenuTextColour, @IsActive, @Checkstatus)
+                      
+                      DECLARE @SettingsID int
+                      SELECT @SettingsID = [SettingsID]
+                      FROM [dbo].[SiteSettings]
+                      WHERE @@ROWCOUNT > 0 AND [SettingsID] = scope_identity()
+                      
+                      SELECT t0.[SettingsID]
+                      FROM [dbo].[SiteSettings] AS t0
+                      WHERE @@ROWCOUNT > 0 AND t0.[SettingsID] = @SettingsID"
+            );
+            
+            CreateStoredProcedure(
+                "dbo.SiteSettings_Update",
+                p => new
+                    {
+                        SettingsID = p.Int(),
+                        SettingName = p.String(maxLength: 20),
+                        ApplicationTitle = p.String(maxLength: 50),
+                        ApplicationTitleColour = p.String(maxLength: 100),
+                        ApplicationTitleSize = p.String(maxLength: 50),
+                        ApplicationTitleFont = p.String(maxLength: 50),
+                        NavColour = p.String(maxLength: 50),
+                        NavTextColour = p.String(maxLength: 50),
+                        MenuColour = p.String(maxLength: 50),
+                        MenuTextColour = p.String(maxLength: 50),
+                        IsActive = p.Boolean(),
+                        Checkstatus = p.String(maxLength: 1),
+                    },
+                body:
+                    @"UPDATE [dbo].[SiteSettings]
+                      SET [SettingName] = @SettingName, [ApplicationTitle] = @ApplicationTitle, [ApplicationTitleColour] = @ApplicationTitleColour, [ApplicationTitleSize] = @ApplicationTitleSize, [ApplicationTitleFont] = @ApplicationTitleFont, [NavColour] = @NavColour, [NavTextColour] = @NavTextColour, [MenuColour] = @MenuColour, [MenuTextColour] = @MenuTextColour, [IsActive] = @IsActive, [Checkstatus] = @Checkstatus
+                      WHERE ([SettingsID] = @SettingsID)"
+            );
+            
+            CreateStoredProcedure(
+                "dbo.SiteSettings_Delete",
+                p => new
+                    {
+                        SettingsID = p.Int(),
+                    },
+                body:
+                    @"DELETE [dbo].[SiteSettings]
+                      WHERE ([SettingsID] = @SettingsID)"
+            );
+            
+            CreateStoredProcedure(
                 "dbo.States_Insert",
                 p => new
                     {
@@ -542,6 +625,9 @@ namespace Loginapplication.Migrations
             DropStoredProcedure("dbo.States_Delete");
             DropStoredProcedure("dbo.States_Update");
             DropStoredProcedure("dbo.States_Insert");
+            DropStoredProcedure("dbo.SiteSettings_Delete");
+            DropStoredProcedure("dbo.SiteSettings_Update");
+            DropStoredProcedure("dbo.SiteSettings_Insert");
             DropStoredProcedure("dbo.Role_Delete");
             DropStoredProcedure("dbo.Role_Update");
             DropStoredProcedure("dbo.Role_Insert");
@@ -566,6 +652,7 @@ namespace Loginapplication.Migrations
             DropTable("dbo.User");
             DropTable("dbo.Technologies");
             DropTable("dbo.States");
+            DropTable("dbo.SiteSettings");
             DropTable("dbo.Role");
             DropTable("dbo.MenuManagement");
             DropTable("dbo.FileUpload");
