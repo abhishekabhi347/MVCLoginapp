@@ -7,132 +7,219 @@
 <script src="~/Scripts/jscolor.js"></script>
 
 
-@using (Html.BeginForm("SiteSetting", "Utility", FormMethod.Post, new { id = "myForm" }))
+@using (Html.BeginForm("SiteSetting", "Utility", FormMethod.Post, new { id = "myForm", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
 
-    <div class="container">
-        <h5 class="text-center pt-4 text-primary font-weight-bold">Add Edit Site Settings</h5>
-        <br />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(m => m.SettingsID)
+<div class="container">
+    <h5 class="text-center pt-4 text-primary font-weight-bold">Add Edit Site Settings</h5>
+    <br />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.SettingsID)
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.SettingName, htmlAttributes: new { @for = "txtname" })
-                    @Html.EditorFor(model => model.SettingName, new { htmlAttributes = new { @class = "form-control", @id = "txtname" } })
-                    @Html.ValidationMessageFor(model => model.SettingName, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.SettingName, htmlAttributes: new { @for = "txtname" })
+                @Html.EditorFor(model => model.SettingName, new { htmlAttributes = new { @class = "form-control", @id = "txtname" } })
+                @Html.ValidationMessageFor(model => model.SettingName, "", new { @class = "text-danger" })
 
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.ApplicationTitle, htmlAttributes: new { @for = "txtappname" })
-                    @Html.EditorFor(model => model.ApplicationTitle, new { htmlAttributes = new { @class = "form-control", @id = "txtappname" } })
-                    @Html.ValidationMessageFor(model => model.ApplicationTitle, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.ApplicationTitleFont, htmlAttributes: new { @for = "txtfontname" })
-                    @Html.EditorFor(model => model.ApplicationTitleFont, new { htmlAttributes = new { @class = "form-control", @id = "txtfontname" } })
-                    @Html.ValidationMessageFor(model => model.ApplicationTitleFont, "", new { @class = "text-danger" })
-
-                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4 ">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.ApplicationTitleSize, htmlAttributes: new { @for = "txtfontsize" })
-                    @Html.EditorFor(model => model.ApplicationTitleSize, new { htmlAttributes = new { @class = "form-control", @id = "txtfontsize" ,@type="number",@min=0,@max=100} })
-                    @Html.ValidationMessageFor(model => model.ApplicationTitleSize, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.ApplicationTitleColour, htmlAttributes: new { @for = "txtappcolour" })
-                    @Html.EditorFor(model => model.ApplicationTitleColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtappcolour" } })
-                    @Html.ValidationMessageFor(model => model.ApplicationTitleColour, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.MenuColour, htmlAttributes: new { @for = "txtmenucolour" })
-                    @Html.EditorFor(model => model.MenuColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtmenucolour" } })
-                    @Html.ValidationMessageFor(model => model.MenuColour, "", new { @class = "text-danger" })
-                </div>
-            </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.ApplicationTitle, htmlAttributes: new { @for = "txtappname" })
+                @Html.EditorFor(model => model.ApplicationTitle, new { htmlAttributes = new { @class = "form-control", @id = "txtappname" } })
+                @Html.ValidationMessageFor(model => model.ApplicationTitle, "", new { @class = "text-danger" })
 
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.MenuTextColour, htmlAttributes: new { @for = "txtmenutextcolour" })
-                    @Html.EditorFor(model => model.MenuTextColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtmenutextcolour" } })
-                    @Html.ValidationMessageFor(model => model.MenuTextColour, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.NavColour, htmlAttributes: new { @for = "txtnavcolour" })
-                    @Html.EditorFor(model => model.NavColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtnavcolour" } })
-                    @Html.ValidationMessageFor(model => model.NavColour, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group md-form">
-                    @Html.LabelFor(model => model.NavTextColour, htmlAttributes: new { @for = "txtnavtextcolour" })
-                    @Html.EditorFor(model => model.NavTextColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtnavtextcolour" } })
-                    @Html.ValidationMessageFor(model => model.NavTextColour, "", new { @class = "text-danger" })
-                </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.ApplicationTitleFont, htmlAttributes: new { @for = "txtfontname" })
+                @Html.EditorFor(model => model.ApplicationTitleFont, new { htmlAttributes = new { @class = "form-control", @id = "txtfontname" } })
+                @Html.ValidationMessageFor(model => model.ApplicationTitleFont, "", new { @class = "text-danger" })
 
-        <br />
-        <div class="text-center">
-            <button type="submit" name="btnSubmit" id="btnSubmit" class="btn btn-primary btn-md">Submit</button>
-            <button type="button" name="btnCancel" class="btn btn-primary btn-md" onclick="location.href='/Utility/SiteSetting'">Cancel</button>
+            </div>
         </div>
-
-        <br />
+    </div>
+    <div class="row">
+        <div class="col-md-4 ">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.ApplicationTitleSize, htmlAttributes: new { @for = "txtfontsize" })
+                @Html.EditorFor(model => model.ApplicationTitleSize, new { htmlAttributes = new { @class = "form-control", @id = "txtfontsize", @type = "number", @min = 0, @max = 100 } })
+                @Html.ValidationMessageFor(model => model.ApplicationTitleSize, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.ApplicationTitleColour, htmlAttributes: new { @for = "txtappcolour" })
+                @Html.EditorFor(model => model.ApplicationTitleColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtappcolour" } })
+                @Html.ValidationMessageFor(model => model.ApplicationTitleColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.MenuColour, htmlAttributes: new { @for = "txtmenucolour" })
+                @Html.EditorFor(model => model.MenuColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtmenucolour" } })
+                @Html.ValidationMessageFor(model => model.MenuColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
     </div>
-}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.MenuTextColour, htmlAttributes: new { @for = "txtmenutextcolour" })
+                @Html.EditorFor(model => model.MenuTextColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtmenutextcolour" } })
+                @Html.ValidationMessageFor(model => model.MenuTextColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.NavColour, htmlAttributes: new { @for = "txtnavcolour" })
+                @Html.EditorFor(model => model.NavColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtnavcolour" } })
+                @Html.ValidationMessageFor(model => model.NavColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group md-form">
+                @Html.LabelFor(model => model.NavTextColour, htmlAttributes: new { @for = "txtnavtextcolour" })
+                @Html.EditorFor(model => model.NavTextColour, new { htmlAttributes = new { @class = "form-control jscolor {required:false}", @id = "txtnavtextcolour" } })
+                @Html.ValidationMessageFor(model => model.NavTextColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
 
+    
+
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="btn btn-primary">
+                @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "", @type = "file", @id = "imageBrowes" } })
+                @*<input type="file" id="imageBrowes" name="imageBrowes"  />*@
+            </div>
+        </div>
+        @*<div class="col-md-6">
+            <div id="imgPreview" class="thumbnail" style="display:none">
+                <img class="thumbnail img-responsive"  height="80" width="80" id="targetImg" />
+                <div class="caption">
+                    <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                    <span id="description"></span>
+                </div>
+            </div>
+
+        </div>*@
+
+        @if (ViewBag.img != null)
+        {
+            <div class="col-md-2 col-xs-6" id="uploadedImage">
+                <img title="Uploaded Image" src="@(ViewBag.filepath)" class="img-thumbnail border border-primary rounded shadow-sm bg-white" alt="@(ViewBag.filepath)" />
+                <figcaption>@(ViewBag.filepath)</figcaption>
+            </div>
+        }
+    </div>
+    <br />
+
+
+    <br />
+    <div class="text-center">
+        <button type="submit" name="btnSubmit" id="btnSubmit"  class="btn btn-primary btn-md">Submit</button>
+        <button type="button" name="btnCancel" class="btn btn-primary btn-md" onclick="location.href='/Utility/SiteSetting'">Cancel</button>
+    </div>
+
+    <br />
+
+</div>
+}
 
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
 <script>
+
     $(document).ready(function () {
 
+        $("#imageBrowes").change(function () {
 
+            var File = this.files;
+            if (File && File[0]) {
+                ReadImage(File[0]);
+            }
 
-        $("#btnSubmit").click(function () {
+            $("#uploadedImage").hide();
 
-
-            var myformdata = $("#myForm").serialize();
-
-            $.ajax({
-
-                type: "POST",
-                url: "/Utility/AddEditSettings",
-                data: myformdata,
-                success: function () {
-
-                },
-                error: function () {
-                    alert('error');
-                }
-
-            });
         });
 
+        if ($('#imageBrowes').val()) {
+            alert('has img');
+        }
+
     });
+
+
+    $("#btnSubmit").click(function () {
+
+        var fd = new FormData();
+        var file_data = $('input[type="file"]')[0].files; 
+        //for (var i = 0; i < file_data.length; i++) {              // for multiple files
+        //    fd.append("file_" + i, file_data[i]);
+        //}
+        fd.append("imageFile", file_data[0]);
+        var other_data = $('#myForm').serializeArray();
+        $.each(other_data, function (key, input) {
+            fd.append(input.name, input.value);
+        });
+
+
+        $.ajax({
+            url: '/Utility/AddEditSettings',
+            data: fd,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                //console.log(data);
+            }
+        });
+
+      
+    });
+    var ReadImage = function (file) {
+
+        var reader = new FileReader;
+        var image = new Image;
+
+        reader.readAsDataURL(file);
+        reader.onload = function (_file) {
+
+            image.src = _file.target.result;
+            image.onload = function () {
+
+                var height = this.height;
+                var width = this.width;
+                var type = file.type;
+                var size = ~~(file.size / 1024) + "KB";
+
+                $("#targetImg").attr('src', _file.target.result);
+                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                $("#imgPreview").show();
+
+            };
+
+        };
+
+    };
+
+    var ClearPreview = function () {
+        $("#imageBrowes").val('');
+        $("#description").text('');
+        $("#imgPreview").hide();
+
+    };
 
 </script>
 @section Scripts {

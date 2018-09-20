@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201809200445371_Initial-Migration.Designer.cs">
       <DependentUpon>201809200445371_Initial-Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809200502136_sitefileupload.cs" />
+    <Compile Include="Migrations\201809200502136_sitefileupload.Designer.cs">
+      <DependentUpon>201809200502136_sitefileupload.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Context\empDbContext.cs" />
@@ -446,6 +450,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809200445371_Initial-Migration.resx">
       <DependentUpon>201809200445371_Initial-Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809200502136_sitefileupload.resx">
+      <DependentUpon>201809200502136_sitefileupload.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -60,11 +60,9 @@ namespace Loginapplication.Controllers
                             //Check Login Detail User Name Or Password    
                             var query = (from s in db.Users where (s.UserName == UserName || s.Email == UserName) && s.Password.Equals(encodingPasswordString) select s).FirstOrDefault();
                             var empdb = new EmpDbContext();
-                            var getrole = (from s in empdb.Roles where (s.Roleid == query.Roleid) select s).FirstOrDefault();
                             if (query != null)
                             {
-                                //RedirectToAction("Details/" + id.ToString(), "FullTimeEmployees");    
-                                //return View("../Admin/Registration"); url not change in browser  
+                            var getrole = (from s in empdb.Roles where (s.Roleid == query.Roleid) select s).FirstOrDefault();
                                 Session["EmpName"] = Convert.ToString(result.UserName);
                                 Session["EmpID"] = Convert.ToInt32(result.Empid);
                                 Session["RoleID"] = Convert.ToInt32(result.Roleid);
@@ -73,11 +71,19 @@ namespace Loginapplication.Controllers
 
                                 return RedirectToAction("About");
                             }
-                            ViewBag.Message = "Invalid Password";
+                            else
+                            {
+                                ViewBag.Message = "Invalid Password";
+                                return View();
+                            }
+                            
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Invalid UserName and Password";
                             return View();
                         }
-                        ViewBag.Message = "Invalid UserName and Password";
-                        return View();
+                      
 
                     }
                 }
@@ -85,7 +91,7 @@ namespace Loginapplication.Controllers
                 catch (Exception e)
                 {
                     logger.ErrorException("Error occured in Home controller Index Action", e);
-                    ViewBag.Message = "Invalid User Name and Password";
+                    ViewBag.Message = "Error Login";
                     return View();
                 }
 
@@ -481,7 +487,7 @@ namespace Loginapplication.Controllers
                     ViewBag.Menutxtcolour = (Inactivate.MenuTextColour).ToString();
                     ViewBag.Navcolour = (Inactivate.NavColour).ToString();
                     ViewBag.Navtextcolour = (Inactivate.NavTextColour).ToString();
-                    
+                    ViewBag.Imgsrc = Inactivate.ImagePath;
 
 
                     return PartialView("_Header", data);

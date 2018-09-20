@@ -354,6 +354,15 @@ namespace Loginapplication.Controllers
                 using (EmpDbContext db = new EmpDbContext())
                 {
                     var data = db.siteSettings.Find(SiteID);
+                    if(data != null)
+                    {
+                        if(data.Imagelength != null)
+                        {
+                            ViewBag.img = data.Imagelength;
+                            ViewBag.imgname = data.FileName;
+                            ViewBag.filepath = data.ImagePath;
+                        }
+                    }
                     return View(data);
                 }
 
@@ -365,11 +374,12 @@ namespace Loginapplication.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddEditSettings(SiteSettings model)
+        public ActionResult AddEditSettings(SiteSettings model, HttpPostedFileBase imageFile)
         {
-
+                      
             try
             {
+                var file = imageFile;
                 using (EmpDbContext db = new EmpDbContext())
                 {
                     //update
@@ -388,6 +398,24 @@ namespace Loginapplication.Controllers
                             settingslist.NavColour = model.NavColour;
                             settingslist.NavTextColour = model.NavTextColour;
 
+                            if (file != null)
+                            {
+                                string filename = Path.GetFileName(file.FileName);
+                                file.SaveAs(Server.MapPath("/Assets/" + filename));
+
+                                Stream stream = file.InputStream;
+                                BinaryReader binaryReader = new BinaryReader(stream);
+
+
+                                Byte[] image = binaryReader.ReadBytes((int)stream.Length);
+                                //imagebyte = reader.ReadBytes(file.ContentLength);
+
+                                settingslist.FileName = filename;
+                                settingslist.Imagelength = image;
+                                settingslist.ImagePath = "/Assets/" + filename;                                
+
+                            }
+
                             db.SaveChanges();
                             ModelState.Clear();
                         }
@@ -399,6 +427,23 @@ namespace Loginapplication.Controllers
                     //Insert
                     else
                     {
+                        if (file != null)
+                        {
+                            string filename = Path.GetFileName(file.FileName);
+                            file.SaveAs(Server.MapPath("/Assets/" + filename));
+
+                            Stream stream = file.InputStream;
+                            BinaryReader binaryReader = new BinaryReader(stream);
+
+
+                            Byte[] image = binaryReader.ReadBytes((int)stream.Length);
+                            //imagebyte = reader.ReadBytes(file.ContentLength);
+
+                            model.FileName = filename;
+                            model.Imagelength = image;
+                            model.ImagePath = "/Assets/" + filename;
+
+                        }
                         model.Checkstatus = "Y";
                         db.siteSettings.Add(model);
                         db.SaveChanges();

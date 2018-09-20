@@ -62,6 +62,15 @@ namespace Loginapplication.Models
         [Required(ErrorMessage = "Menu Text Colour is required")]
         public string MenuTextColour { get; set; }
 
+
+
+        public string FileName { get; set; }
+
+        public string ImagePath { get; set; }
+
+        public byte[] Imagelength { get; set; }
+
+
         [ScaffoldColumn(false)]
         public bool IsActive { get; set; } = false;
 

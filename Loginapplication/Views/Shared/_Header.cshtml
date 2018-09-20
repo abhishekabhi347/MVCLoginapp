@@ -9,6 +9,7 @@
     var menutxtcolour = "";
     var navcolour = "";
     var navtxtcolour = "";
+    var imgsrc ="";
 
     if (ViewBag.Applicationtitle != null)
     {
@@ -43,11 +44,16 @@
         navtxtcolour = @ViewBag.Navtextcolour;
     }
 
+    if(ViewBag.Imgsrc != null)
+    {
+        imgsrc = @ViewBag.Imgsrc;
+    }
+
 
 }
 <nav class="navbar navbar-expand-lg navbar-dark  fixed-top mb-auto" style="background-color: #@navcolour;">
     <div style="margin-right:15px" class="d-none d-sm-block">
-        <img src="~/Assets/ISSIlogo.png" alt="logo" class="img-responsive" height="40" width="60" />
+        <img src="@imgsrc" alt="logo" class="img-responsive" height="40" width="60" />
     </div>
     <a class="navbar-brand font-bold" href="#" style="font-family: @fontfamily ;font-size:@(fontsize)px;color:#@fontcolour;">
        @title
