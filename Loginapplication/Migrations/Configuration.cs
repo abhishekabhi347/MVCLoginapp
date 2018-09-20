@@ -41,7 +41,7 @@ namespace Loginapplication.Migrations
 
             context.Users.AddOrUpdate(
                U=>U.EmpName,
-               new User { EmpName="Administrator",UserName="admin",Password= "2A-67-C0-9B-5E-50-79-63-AE-08-92-C1-23-54-96-52", Email="admin@gmail.com",Roleid=1,Vcode= "zzcdRo9XRX" }
+               new User { EmpName="Administrator",UserName="admin",Password= "2A-67-C0-9B-5E-50-79-63-AE-08-92-C1-23-54-96-52", Email="admin@gmail.com",Roleid=2,Vcode= "zzcdRo9XRX" }
                 
                 );
 
