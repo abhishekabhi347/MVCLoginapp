@@ -19,7 +19,7 @@ namespace Loginapplication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            UnityConfig.RegisterComponents();
+            //UnityConfig.RegisterComponents();
             //Database.SetInitializer(new EmpInitilizier());
 
             Application["UsersOnline"] = 0;

@@ -178,8 +178,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TechnologyController.cs" />
     <Compile Include="Controllers\UtilityController.cs" />
@@ -445,16 +443,6 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LoginappBLL\LoginappBLL.csproj">
-      <Project>{612c6887-84fc-40a0-bb98-b541b997c250}</Project>
-      <Name>LoginappBLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LoginappDomain\LoginappDomain.csproj">
-      <Project>{b9de7a52-41a4-4ead-bf70-428a3e72d358}</Project>
-      <Name>LoginappDomain</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809200445371_Initial-Migration.resx">

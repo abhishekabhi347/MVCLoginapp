@@ -1,7 +1,4 @@
-﻿using LoginappBLL;
-using LoginappBLL.Interface;
-using LoginappDomain;
-using Loginapplication.Models;
+﻿using Loginapplication.Models;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -133,21 +130,21 @@ namespace Loginapplication.Controllers
         }
 
 
-        public ActionResult Users()
-        {
-            if (Session["EmpName"] != null)
-            {
-                ViewBag.UsersName = new UsersBusiness().GetUserName(234);
+        //public ActionResult Users()
+        //{
+        //    if (Session["EmpName"] != null)
+        //    {
+        //        ViewBag.UsersName = new UsersBusiness().GetUserName(234);
 
-                List<UsersDomainModel> listDomain = new UsersBusiness().GetAllUsers();
+        //        List<UsersDomainModel> listDomain = new UsersBusiness().GetAllUsers();
 
 
-                ViewBag.UserList = listDomain;
+        //        ViewBag.UserList = listDomain;
 
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
-        }
+        //        return View();
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
 
 
         [HttpGet]
