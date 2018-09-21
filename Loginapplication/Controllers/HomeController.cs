@@ -11,11 +11,9 @@ using System.Runtime.Remoting.Contexts;
 using System.IO;
 using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
+
 using NLog;
+using Rotativa;
 
 namespace Loginapplication.Controllers
 {
@@ -351,8 +349,8 @@ namespace Loginapplication.Controllers
         public ActionResult EmpDetails(int id)
         {
 
-            if (Session["EmpName"] != null)
-            {
+            //if (Session["EmpName"] != null)
+            //{
                 using (EmpDbContext empDb = new EmpDbContext())
                 {
                     var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
@@ -369,11 +367,11 @@ namespace Loginapplication.Controllers
 
 
 
-            }
-            else
-            {
-                return RedirectToAction("Index");
-            }
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index");
+            //}
         }
 
         public ActionResult EmpDelete(int id)
@@ -503,6 +501,27 @@ namespace Loginapplication.Controllers
             }
         }
 
+        public ActionResult CreatePdf(int EmpID)
+        {
+            var report = new ActionAsPdf("PrintDetails", new { id = EmpID });
+            return report;
+
+        }
+
+
+        public ActionResult PrintDetails(int id)
+        {
+            using (EmpDbContext empDb = new EmpDbContext())
+            {
+                //var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
+                var result = empDb.Employees.Where(x => x.EmployeeId == id).ToList();
+                if (result != null)
+                {
+                    return PartialView("_Printpdf",result);
+                }
+                return null;
+            }
+        }
 
 
 

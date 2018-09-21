@@ -39,7 +39,7 @@
 
                         @Html.ActionLink("Delete", "EmpDelete", new { id = item.EmployeeId }) |
 
-                        @Html.ActionLink("Print", "CreatePdf", new { ID = item.EmployeeId })
+                        @Html.ActionLink("Print", "CreatePdf", new { EmpID = item.EmployeeId },new { @target = "_blank"})
 
 
                     </td>
