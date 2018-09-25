@@ -21,6 +21,7 @@ namespace Loginapplication.Controllers
             {
 
                 var tech = new EmpDbContext();
+                ViewBag.listcount = Convert.ToInt32( tech.Technologies.Where(x => x.Checkstatus == "Y").ToList().Count());
                 ViewBag.tech = tech.Technologies.Where(x => x.Checkstatus == "Y").ToList();
                 return View();
             }

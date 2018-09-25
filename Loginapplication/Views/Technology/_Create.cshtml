@@ -12,7 +12,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Technology, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.TextBoxFor(model => model.Technology, htmlAttributes: new { @class = "form-control", @placeholder = "Please Enter Technology" })
+                @Html.TextBoxFor(model => model.Technology, htmlAttributes: new { @class = "form-control character", @placeholder = "Please Enter Technology", @maxlength = 50 })
                 @Html.ValidationMessageFor(model => model.Technology, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-6">
-                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control", @placeholder = "Please Enter Description" })
+                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control character", @placeholder = "Please Enter Description", @maxlength = 100 })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -45,6 +45,16 @@
 
     $(document).ready(function () {
 
+        $('.character').maxlength({
+            alwaysShow: true,
+            threshold: 50,
+            warningClass: "badge badge-success",
+            limitReachedClass: "badge badge-danger",
+            placement: 'bottom-right-inside',
+            //preText: 'You have entered ',
+            separator: ' / ',
+            //postText: ' chars remaining.',
+        });
 
         $("#btnSubmit").click(function () {
 

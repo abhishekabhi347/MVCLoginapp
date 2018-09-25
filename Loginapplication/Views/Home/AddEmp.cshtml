@@ -19,7 +19,7 @@
 
 
         <div class="form-horizontal">
-            <h5 class="text-center  font-weight-bold">Add Employee</h5>
+            <h5 class="text-center text-primary font-weight-bold">Add Employee</h5>
             <br />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -29,7 +29,7 @@
                 <div class="col-md-4">
                     <div class="form-group md-form">
                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @for = "txtname" })
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "txtname" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control character", @id = "txtname",@maxlength=50 } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                       
                     </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-4">
                     <div class="form-group md-form">
                         @Html.LabelFor(model => model.Description, htmlAttributes: new { @for = "txtdesc" })
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "txtdesc" } })
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control character", @id = "txtdesc" , @maxlength = 100} })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -74,37 +74,46 @@
                 <div class="col-md-4">
                     <div class="form-group md-form">
                         @Html.LabelFor(model => model.Company, htmlAttributes: new { @for = "txtcom" })
-                        @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control", @id = "txtcom" } })
+                        @Html.EditorFor(model => model.Company, new { htmlAttributes = new { @class = "form-control character", @id = "txtcom", @maxlength = 50 } })
                         @Html.ValidationMessageFor(model => model.Company, "", new { @class = "text-danger" })
                     </div>
                 </div>              
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EmpDate)
-                            @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly=true})
+                    <div class="form-group md-form">
+                        @Html.LabelFor(model => model.EmpDate, htmlAttributes: new { @for = "datepicker" })
+                        @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly = true })
                         @Html.ValidationMessageFor(model => model.EmpDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @*<div class="col-md-4">
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.EmpDate)
+                        @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly = true })
+                        @Html.ValidationMessageFor(model => model.EmpDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
             </div>
 
 
             <br />
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+                <div class="text-center col-md-12">
                     <button type="submit" class="btn btn-primary btn-md ">Submit</button>
+                    <button type="button" class="btn btn-md btn-primary" onclick="location.href='/Home/Contact'">Cancel</button>
                     @*<input type="submit" value="Create" class="btn btn-default" />*@
                 </div>
             </div>
             <br />
-            <div>
+            @*<div>
                 @Html.ActionLink("Back to List", "Contact")
             </div>
 
 
-            <br />
+            <br />*@
         </div>
     }
 

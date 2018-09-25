@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (ViewBag.Tech != null)
+                @if (ViewBag.Tech != null && ViewBag.listcount > 0)
                 {
 
                     foreach (var item in ViewBag.Tech)
@@ -41,6 +41,14 @@
                             </td>
                         </tr>
                     }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center">
+                            <font class="text-danger">No Records to display</font>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

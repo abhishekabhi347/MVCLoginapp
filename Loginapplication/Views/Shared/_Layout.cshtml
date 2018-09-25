@@ -20,6 +20,7 @@
 
      
     </style>
+    
 
     @Html.Action("GetMenuList", "Home")
 </head>
@@ -27,12 +28,12 @@
     @if (Session["EmpName"] != null)
     {
 
-       // @Html.Partial("_Header");
-    <div class="container body-content   z-depth-2 " style="background-color:white">
+        // @Html.Partial("_Header");
+        <div class="container body-content   z-depth-2 " style="background-color:white">
 
-        @RenderBody()
+            @RenderBody()
 
-    </div>
+        </div>
         <br />
         <br /><br />
         <footer class="page-footer font-small bg-primary mb-auto fixed-bottom">
@@ -52,6 +53,57 @@
 
 
         @RenderSection("scripts", required: false)
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                //Character limit function
+                $('.character').maxlength({
+                    alwaysShow: true,
+                    threshold: 50,
+                    warningClass: "text text-sm text-success",
+                    limitReachedClass: "text text-sm text-danger",
+                    placement: 'bottom-right-inside',
+                    //preText: 'You have entered ',
+                    separator: ' / ',
+                    //postText: ' chars remaining.',
+                });
+
+                $('.onlynum').keypress(function (event) {
+                    var $this = $(this);
+                    if ((event.which != 46 || $this.val().indexOf('.') != -1) && ((event.which < 48 || event.which > 57) && (event.which != 0 && event.which != 8))) {
+                        event.preventDefault();
+                    }
+                    var text = $(this).val();
+                    if ((event.which == 46) && (text.indexOf('.') == -1)) {
+                        setTimeout(function () {
+                            if ($this.val().substring($this.val().indexOf('.')).length > 3) {
+                                $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
+                            }
+                        }, 1);
+                    }
+
+                    if ((text.indexOf('.') != -1) &&
+                        (text.substring(text.indexOf('.')).length > 2) &&
+                        (event.which != 0 && event.which != 8) &&
+                        ($(this)[0].selectionStart >= text.length - 2)) {
+                        event.preventDefault();
+                    }
+                });
+
+                $('.onlynum').bind("paste", function (e) {
+                    var text = e.originalEvent.clipboardData.getData('Text');
+                    if ($.isNumeric(text)) {
+                        if ((text.substring(text.indexOf('.')).length > 3) && (text.indexOf('.') > -1)) {
+                            e.preventDefault();
+                            $(this).val(text.substring(0, text.indexOf('.') + 3));
+                        }
+                    }
+                    else {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
 
     }
 

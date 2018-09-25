@@ -29,6 +29,8 @@ namespace Loginapplication.Models
         [StringLength(100)]
         public string ACTION_NAME { get; set; }
 
+        public int Menu_order { get; set; }
+
         [StringLength(2)]
         [ScaffoldColumn(false)]
         public string Checkstatus { get; set; } = "Y";

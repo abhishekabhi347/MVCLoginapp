@@ -23,19 +23,20 @@ namespace Loginapplication.Migrations
             context.MenuManagement.AddOrUpdate(
 
                 M => M.Menu_NAME,
-                new MenuManagement { Menu_ID =1, Menu_Parent_ID = 0, Menu_NAME = "About", CONTROLLER_NAME = "Home", ACTION_NAME = "About" },
-                new MenuManagement { Menu_ID =2, Menu_Parent_ID = 0, Menu_NAME = "Contact", CONTROLLER_NAME = "Home", ACTION_NAME = "Contact" },
-                new MenuManagement { Menu_ID =3, Menu_Parent_ID = 0, Menu_NAME = "Technologies", CONTROLLER_NAME = "Technology", ACTION_NAME = "Index" },
-                new MenuManagement { Menu_ID =4, Menu_Parent_ID = 0, Menu_NAME = "Utilities", CONTROLLER_NAME = "", ACTION_NAME = "" },
-                new MenuManagement { Menu_ID =5, Menu_Parent_ID = 4, Menu_NAME = "File Upload", CONTROLLER_NAME = "Utility", ACTION_NAME = "Create" },
-                new MenuManagement { Menu_ID =6, Menu_Parent_ID = 4, Menu_NAME = "Role Management", CONTROLLER_NAME = "Utility", ACTION_NAME = "Roles" },
-                new MenuManagement { Menu_ID =7, Menu_Parent_ID = 4, Menu_NAME = "Users", CONTROLLER_NAME = "Utility", ACTION_NAME = "Users", Checkstatus = "N" },
-                new MenuManagement { Menu_ID =8, Menu_Parent_ID = 4, Menu_NAME = "Site Settings", CONTROLLER_NAME = "Utility", ACTION_NAME = "SiteSetting" }
+                new MenuManagement { Menu_ID =1, Menu_Parent_ID = 0, Menu_NAME = "About", CONTROLLER_NAME = "Home", ACTION_NAME = "About" , Menu_order= 1},
+                new MenuManagement { Menu_ID =2, Menu_Parent_ID = 0, Menu_NAME = "Contact", CONTROLLER_NAME = "Home", ACTION_NAME = "Contact" ,Menu_order=2},
+                new MenuManagement { Menu_ID =3, Menu_Parent_ID = 0, Menu_NAME = "Technologies", CONTROLLER_NAME = "Technology", ACTION_NAME = "Index",Menu_order=3 },
+                new MenuManagement { Menu_ID =4, Menu_Parent_ID = 0, Menu_NAME = "Utilities", CONTROLLER_NAME = "", ACTION_NAME = "" ,Menu_order=4},
+                new MenuManagement { Menu_ID =5, Menu_Parent_ID = 4, Menu_NAME = "File Upload", CONTROLLER_NAME = "Utility", ACTION_NAME = "Create",Menu_order=401 },
+                new MenuManagement { Menu_ID =6, Menu_Parent_ID = 4, Menu_NAME = "Role Management", CONTROLLER_NAME = "Utility", ACTION_NAME = "Roles" ,Menu_order=402},
+                new MenuManagement { Menu_ID =7, Menu_Parent_ID = 4, Menu_NAME = "Users", CONTROLLER_NAME = "Utility", ACTION_NAME = "Users", Checkstatus = "N" ,Menu_order=403},
+                new MenuManagement { Menu_ID =8, Menu_Parent_ID = 4, Menu_NAME = "Site Settings", CONTROLLER_NAME = "Utility", ACTION_NAME = "SiteSetting" ,Menu_order=404}
                 );
 
             context.siteSettings.AddOrUpdate(
                 M => M.SettingName,
-                new SiteSettings {SettingsID=1, SettingName = "Default", ApplicationTitle = "Sample Application", ApplicationTitleColour = "FFFFFF", ApplicationTitleFont = "Arial Verdana", ApplicationTitleSize = "20", MenuColour = "0BA5FF", MenuTextColour = "FFFFFF", NavColour = "1DA4FF", NavTextColour = "FFFFFF", IsActive = true }
+                new SiteSettings {SettingsID=1, SettingName = "Default", ApplicationTitle = "Sample Application", ApplicationTitleColour = "FFFFFF", ApplicationTitleFont = "Arial Verdana", ApplicationTitleSize = "20",
+                    MenuColour = "0BA5FF", MenuTextColour = "FFFFFF", NavColour = "1DA4FF", NavTextColour = "FFFFFF", IsActive = true }
 
                 );
 

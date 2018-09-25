@@ -3,7 +3,7 @@ namespace Loginapplication.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class InitialMigrations : DbMigration
     {
         public override void Up()
         {
@@ -54,6 +54,7 @@ namespace Loginapplication.Migrations
                         Menu_NAME = c.String(nullable: false, maxLength: 100),
                         CONTROLLER_NAME = c.String(maxLength: 100),
                         ACTION_NAME = c.String(maxLength: 100),
+                        Menu_order = c.Int(nullable: false),
                         Checkstatus = c.String(maxLength: 2),
                     })
                 .PrimaryKey(t => t.Menu_ID);
@@ -86,6 +87,9 @@ namespace Loginapplication.Migrations
                         NavTextColour = c.String(nullable: false, maxLength: 50),
                         MenuColour = c.String(nullable: false, maxLength: 50),
                         MenuTextColour = c.String(nullable: false, maxLength: 50),
+                        FileName = c.String(),
+                        ImagePath = c.String(),
+                        Imagelength = c.Binary(),
                         IsActive = c.Boolean(nullable: false),
                         Checkstatus = c.String(maxLength: 1),
                     })
@@ -296,11 +300,12 @@ namespace Loginapplication.Migrations
                         Menu_NAME = p.String(maxLength: 100),
                         CONTROLLER_NAME = p.String(maxLength: 100),
                         ACTION_NAME = p.String(maxLength: 100),
+                        Menu_order = p.Int(),
                         Checkstatus = p.String(maxLength: 2),
                     },
                 body:
-                    @"INSERT [dbo].[MenuManagement]([Menu_Parent_ID], [Menu_NAME], [CONTROLLER_NAME], [ACTION_NAME], [Checkstatus])
-                      VALUES (@Menu_Parent_ID, @Menu_NAME, @CONTROLLER_NAME, @ACTION_NAME, @Checkstatus)
+                    @"INSERT [dbo].[MenuManagement]([Menu_Parent_ID], [Menu_NAME], [CONTROLLER_NAME], [ACTION_NAME], [Menu_order], [Checkstatus])
+                      VALUES (@Menu_Parent_ID, @Menu_NAME, @CONTROLLER_NAME, @ACTION_NAME, @Menu_order, @Checkstatus)
                       
                       DECLARE @Menu_ID int
                       SELECT @Menu_ID = [Menu_ID]
@@ -321,11 +326,12 @@ namespace Loginapplication.Migrations
                         Menu_NAME = p.String(maxLength: 100),
                         CONTROLLER_NAME = p.String(maxLength: 100),
                         ACTION_NAME = p.String(maxLength: 100),
+                        Menu_order = p.Int(),
                         Checkstatus = p.String(maxLength: 2),
                     },
                 body:
                     @"UPDATE [dbo].[MenuManagement]
-                      SET [Menu_Parent_ID] = @Menu_Parent_ID, [Menu_NAME] = @Menu_NAME, [CONTROLLER_NAME] = @CONTROLLER_NAME, [ACTION_NAME] = @ACTION_NAME, [Checkstatus] = @Checkstatus
+                      SET [Menu_Parent_ID] = @Menu_Parent_ID, [Menu_NAME] = @Menu_NAME, [CONTROLLER_NAME] = @CONTROLLER_NAME, [ACTION_NAME] = @ACTION_NAME, [Menu_order] = @Menu_order, [Checkstatus] = @Checkstatus
                       WHERE ([Menu_ID] = @Menu_ID)"
             );
             
@@ -404,12 +410,15 @@ namespace Loginapplication.Migrations
                         NavTextColour = p.String(maxLength: 50),
                         MenuColour = p.String(maxLength: 50),
                         MenuTextColour = p.String(maxLength: 50),
+                        FileName = p.String(),
+                        ImagePath = p.String(),
+                        Imagelength = p.Binary(),
                         IsActive = p.Boolean(),
                         Checkstatus = p.String(maxLength: 1),
                     },
                 body:
-                    @"INSERT [dbo].[SiteSettings]([SettingName], [ApplicationTitle], [ApplicationTitleColour], [ApplicationTitleSize], [ApplicationTitleFont], [NavColour], [NavTextColour], [MenuColour], [MenuTextColour], [IsActive], [Checkstatus])
-                      VALUES (@SettingName, @ApplicationTitle, @ApplicationTitleColour, @ApplicationTitleSize, @ApplicationTitleFont, @NavColour, @NavTextColour, @MenuColour, @MenuTextColour, @IsActive, @Checkstatus)
+                    @"INSERT [dbo].[SiteSettings]([SettingName], [ApplicationTitle], [ApplicationTitleColour], [ApplicationTitleSize], [ApplicationTitleFont], [NavColour], [NavTextColour], [MenuColour], [MenuTextColour], [FileName], [ImagePath], [Imagelength], [IsActive], [Checkstatus])
+                      VALUES (@SettingName, @ApplicationTitle, @ApplicationTitleColour, @ApplicationTitleSize, @ApplicationTitleFont, @NavColour, @NavTextColour, @MenuColour, @MenuTextColour, @FileName, @ImagePath, @Imagelength, @IsActive, @Checkstatus)
                       
                       DECLARE @SettingsID int
                       SELECT @SettingsID = [SettingsID]
@@ -435,12 +444,15 @@ namespace Loginapplication.Migrations
                         NavTextColour = p.String(maxLength: 50),
                         MenuColour = p.String(maxLength: 50),
                         MenuTextColour = p.String(maxLength: 50),
+                        FileName = p.String(),
+                        ImagePath = p.String(),
+                        Imagelength = p.Binary(),
                         IsActive = p.Boolean(),
                         Checkstatus = p.String(maxLength: 1),
                     },
                 body:
                     @"UPDATE [dbo].[SiteSettings]
-                      SET [SettingName] = @SettingName, [ApplicationTitle] = @ApplicationTitle, [ApplicationTitleColour] = @ApplicationTitleColour, [ApplicationTitleSize] = @ApplicationTitleSize, [ApplicationTitleFont] = @ApplicationTitleFont, [NavColour] = @NavColour, [NavTextColour] = @NavTextColour, [MenuColour] = @MenuColour, [MenuTextColour] = @MenuTextColour, [IsActive] = @IsActive, [Checkstatus] = @Checkstatus
+                      SET [SettingName] = @SettingName, [ApplicationTitle] = @ApplicationTitle, [ApplicationTitleColour] = @ApplicationTitleColour, [ApplicationTitleSize] = @ApplicationTitleSize, [ApplicationTitleFont] = @ApplicationTitleFont, [NavColour] = @NavColour, [NavTextColour] = @NavTextColour, [MenuColour] = @MenuColour, [MenuTextColour] = @MenuTextColour, [FileName] = @FileName, [ImagePath] = @ImagePath, [Imagelength] = @Imagelength, [IsActive] = @IsActive, [Checkstatus] = @Checkstatus
                       WHERE ([SettingsID] = @SettingsID)"
             );
             

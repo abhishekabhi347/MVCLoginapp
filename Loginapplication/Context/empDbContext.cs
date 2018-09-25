@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 
 namespace Loginapplication.Models
 {
@@ -35,6 +37,12 @@ namespace Loginapplication.Models
         public DbSet<SiteSettings> siteSettings { get; set; }
 
 
+
+      
+
+
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -55,6 +63,8 @@ namespace Loginapplication.Models
                 .IsUnicode(false);
 
         }
+
+
     }
 
 }

@@ -23,7 +23,8 @@ namespace Loginapplication
                       "~/Scripts/bootstrap.js",
                       "~/MDB Free/js/mdb.min.js",
                       "~/Google material design/material.min.js",
-                      "~/Scripts/bootstrap-datepicker.js"));
+                      "~/Scripts/bootstrap-datepicker.js",
+                      "~/Scripts/bootstrap-maxlength.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

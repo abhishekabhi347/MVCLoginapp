@@ -188,9 +188,10 @@ namespace Loginapplication.Controllers
 
                             return RedirectToAction("Index", "Home");
                         }
-
-                        ViewBag.Message = "User Alredy Exixts!!!!!!!!!!";
-                        return View();
+                        var p = new User();
+                        p.RoleList = db.Roles.ToList();
+                        ViewBag.Message = "User Already Exists!";
+                        return View(p);
 
                     }
                 }
@@ -198,7 +199,7 @@ namespace Loginapplication.Controllers
                 {
                     logger.ErrorException("Error occured in registration", e);
                     ViewBag.Message = "Some exception occured" + e;
-                    return View("Error");
+                    return RedirectToAction("Register");
                 }
 
             }
@@ -276,6 +277,9 @@ namespace Loginapplication.Controllers
                 
                 using (EmpDbContext empDb = new EmpDbContext())
                 {
+                    //SqlParameter param1 = new SqlParameter("@EmployeeId", id);
+                    //var employee = empDb.Employees.SqlQuery(@"Exec GetEmpById @EmployeeId", param1).Single();
+
                     var result = (from s in empDb.Employees where s.EmployeeId == id select s).FirstOrDefault();
 
                     if (result != null)

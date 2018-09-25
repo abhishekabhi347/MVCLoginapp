@@ -5,20 +5,19 @@
 }
 
 <br />
-<h2 class="text-center">@ViewBag.Title</h2>
+<h4 class="text-center">@ViewBag.Title</h4>
 <br />
 
-<br />
 
 <div class="container">
     <div class="col-md-3 text-left">
-        @Html.ActionLink("Add New Employee Details", "AddEmp")
-
+        @*@Html.ActionLink("Add New Employee Details", "AddEmp")*@
+        <a href="/Home/AddEmp" class="btn btn-primary">Add New Employee Details</a>
     </div>
     <br />
-    <table class="table table-striped table-hover table-md table-bordered">
+    <table class="table table-striped table-hover table-md table-bordered" >
         <thead>
-            <tr class="text-center bg-dark text-white">
+            <tr class="text-center bg-info text-white">
                 <td>Action</td>
                 <td>Employee Name</td>
                 <td>Job</td>
@@ -32,14 +31,18 @@
                 <tr>
                     <td class="text-center">
 
+                        <a href="/Home/EditEmp/@item.EmployeeId" title="Edit"><i class="fa fa-pencil"></i></a> &nbsp;&nbsp;
+                        <a href="/Home/EmpDelete/@item.EmployeeId" title="Delete"><i class="fa fa-trash"></i></a> &nbsp;&nbsp;
+                        <a href="/Home/EmpDetails/@item.EmployeeId" title="Details"><i class="fa fa-arrows-alt"></i></a> &nbsp;&nbsp;
+                        <a href="/Home/CreatePdf/@item.EmployeeId" title="Print" id="printtech"><i class="fa fa-print"></i></a>
 
-                        @Html.ActionLink("Edit", "EditEmp", new { id = item.EmployeeId }) |
+                        @*@Html.ActionLink("Edit", "EditEmp", new { id = item.EmployeeId }) |
 
                         @Html.ActionLink("Details", "EmpDetails", new { id = item.EmployeeId }) |
 
                         @Html.ActionLink("Delete", "EmpDelete", new { id = item.EmployeeId }) |
 
-                        @Html.ActionLink("Print", "CreatePdf", new { EmpID = item.EmployeeId },new { @target = "_blank"})
+                        @Html.ActionLink("Print", "CreatePdf", new { EmpID = item.EmployeeId }, new { @target = "_blank" })*@
 
 
                     </td>
@@ -63,3 +66,5 @@
 
 </div>
 <br /><br />
+
+

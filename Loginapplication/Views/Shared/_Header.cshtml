@@ -53,7 +53,11 @@
 }
 <nav class="navbar navbar-expand-lg navbar-dark  fixed-top mb-auto" style="background-color: #@navcolour;">
     <div style="margin-right:15px" class="d-none d-sm-block">
-        <img src="@imgsrc" alt="logo" class="img-responsive" height="40" width="60" />
+        @if (ViewBag.Imgsrc != null)
+        {
+            <img src="@imgsrc" alt="logo" class="img-responsive" height="40" width="60" />
+        }
+       
     </div>
     <a class="navbar-brand font-bold" href="#" style="font-family: @fontfamily ;font-size:@(fontsize)px;color:#@fontcolour;">
        @title
@@ -86,7 +90,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
         <ul class="navbar-nav">
-            @{foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0 && s.Checkstatus == "Y").Distinct().OrderBy(x => x.Menu_ID).ToList())
+            @{foreach (var item in Model.Where(s => s.Menu_Parent_ID == 0 && s.Checkstatus == "Y").Distinct().OrderBy(x => x.Menu_order).ToList())
                 {
                     if (item.ACTION_NAME != "")
                     {

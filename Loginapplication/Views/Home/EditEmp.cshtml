@@ -11,12 +11,12 @@
     @Html.AntiForgeryToken()
     <br />
     <div class="form-horizontal">
-        <h4>Edit Employee Details</h4>
-        <hr />
+        <h5 class="text-center text-primary font-weight-bold">Edit Employee Details</h5>
+        
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.EmployeeId)
 
-
+        <br />
 
 
         <div class="row">
@@ -84,8 +84,8 @@
 
         <div class="row">
             <div class="col-md-4">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EmpDate)
+                <div class="form-group md-form">
+                    @Html.LabelFor(model => model.EmpDate, htmlAttributes: new { @for = "datepicker" })
                     @Html.TextBoxFor(model => model.EmpDate, new { @class = "form-control", @id = "datepicker", @readonly = true })
                     @Html.ValidationMessageFor(model => model.EmpDate, "", new { @class = "text-danger" })
                 </div>
@@ -97,16 +97,17 @@
 
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="text-center col-md-12">
                 <button type="submit" class="btn btn-primary btn-md ">Submit</button>
                 @*<input type="submit" value="Create" class="btn btn-default" />*@
+                <button type="button" class="btn btn-md btn-primary" onclick="location.href='/Home/Contact'">Cancel</button>
             </div>
         </div>
         <br />
-        <div>
+        @*<div>
             @Html.ActionLink("Back to List", "Contact")
         </div>
-        <br />
+        <br />*@
     </div>
 }
 
